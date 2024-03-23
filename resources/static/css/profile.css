@@ -1,0 +1,222 @@
+
+.profile-navigation li {
+    border: 1px dotted gray;
+    border-radius: 0.5em;
+    list-style: none;
+    display: inline;
+    margin-left: 1em;
+    padding: 0.5em 2em;
+}
+
+.profile-navigation a {
+    color: white;
+    font-size: 18px;
+}
+
+.profile-list {
+    text-align: center;
+    margin: 2em auto;
+    display: block;
+}
+
+
+.profile-navigation li:nth-of-type(2) {
+    background-color: darkorange;
+}
+
+.profile-navigation li:nth-of-type(2):hover {
+    background-color: orange;
+}
+
+
+.profile-navigation li:nth-of-type(3) {
+    background-color: firebrick;
+}
+
+.profile-navigation li:nth-of-type(3):hover {
+    background-color: red;
+}
+
+.profile-navigation li:nth-of-type(1), .profile-navigation li:nth-of-type(4) {
+    background-color: limegreen;
+}
+
+.profile-navigation li:nth-of-type(1):hover,.profile-navigation li:nth-of-type(4):hover {
+    background-color: greenyellow;
+}
+
+
+#wishlist {
+    display: none;
+    margin: 2em auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 0.5em;
+}
+
+.items {
+    margin-right: 1em;
+    margin-top: 1em;
+    display: inline-block;
+    margin-left: 2em;
+    width: 45%;
+}
+
+#wishlist .items img {
+    padding-right: 2em;
+    height: 200px;
+    width: 100%;
+    display: inline;
+}
+
+#wishlist .items p {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+#basic-info {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 0.5em;
+    margin: 2em;
+}
+
+#flex {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+#basic-info h1 {
+    font-size: 28px;
+    margin-top: 1em;
+}
+
+#basic-info p {
+    text-align: center;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+#basic-info .title-top {
+    padding-top: 0.5em;
+}
+
+
+#basic-info .title-bottom {
+    padding-bottom: 0.5em;
+}
+
+h1:hover,h2:hover {
+    color: darkorange;
+}
+
+.loginForm img {
+    width: 45%;
+    height: 310px;
+}
+
+.orange {
+    color: orange;
+}
+
+.loginForm {
+    display: flex;
+    background-color: whitesmoke;
+    flex-wrap: wrap;
+    margin: 1em auto;
+    width: 60%;
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.loginForm form {
+    width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+    display: flex;
+}
+
+.input,.login-label {
+    margin-top: 5px;
+}
+
+.loginForm h3 {
+    margin-right: 1em;
+    display: inline;
+    margin-bottom: 0.5em;
+}
+
+.submit-button {
+    padding: 0.3em 2.2em;
+    border-radius: 0.5em;
+    color: white;
+    background-color: royalblue;
+    margin: 1em auto;
+    width: 100%;
+    display: block;
+    text-align: center;
+    border-color: white;
+}
+
+.rememberMe {
+    margin-top: 1em;
+}
+
+.login-line {
+    width: 100%;
+    color: #3B5998;
+    font-size: large;
+    border-width: 3px
+}
+
+
+.login-issues {
+    margin-top: 0;
+    text-align: center;
+}
+
+#no-products p:nth-of-type(1){
+    font-size: 40px;
+    text-align: center
+}
+
+#no-products p:nth-of-type(2){
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    font-size: 25px;
+    text-align: center
+}
+
+#no-products {
+    margin-bottom: 9.5em;
+}
+
+@media (max-width: 1024px) {
+
+    .loginForm form,.registerForm form,.loginForm img,.registerForm img {
+        width: 100%;
+    }
+
+    .profile-navigation li {
+        display: block;
+        width: 80%;
+        margin: 1em auto;
+    }
+
+    #wishlist {
+        width: 60%;
+    }
+
+    .items {
+        display: inline-block;
+        margin: 1em;
+        width: 100%;
+    }
+}
+
+

@@ -1,0 +1,83 @@
+.container2 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    align-items: center;
+    display: none;
+    justify-content: center;
+    background-color: #fcfcfc;
+}
+
+.container2 input {
+    width: 35%;
+}
+
+.container2 textarea {
+    width: 100%;
+}
+
+.container2 input,textarea,select {
+    border-radius: 0.5em;
+    margin-bottom: 10px;
+    display: block;
+    text-align: left;
+}
+
+.container2 .stock {
+    display: inline;
+}
+
+.container2 input[type = 'radio'] {
+    width: 5%;
+    display: inline;
+}
+
+.container2 .gemstone {
+    display: none;
+}
+
+.container2 #stockLabel {
+    margin-bottom: 1em;
+}
+
+.container2 section {
+    width: 55%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 1em;
+    border: 3px dotted #a3a3a3;
+}
+
+.container2 form {
+    width: 100%;
+    border-radius: 1em;
+    padding: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+}
+.container2 h3 {
+    margin-top: 0;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.container2 button {
+    padding: 5px;
+    border-radius: 0.6em;
+}
+
+.container2 button:hover {
+    background-color: lightgreen;
+}
+
+.container2 input[type=file]:hover {
+    background-color: lightgreen;
+}
+
+.container2 select {
+    display: block;
+}
+
+.centered {
+    width: auto;
+}

@@ -1,0 +1,110 @@
+
+
+.registerForm {
+    display: none;
+    background-color: whitesmoke;
+    flex-wrap: wrap;
+    margin: 1em auto;
+    width: 60%;
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.loginForm img,.registerForm img {
+    width: 45%;
+    height: auto;
+}
+
+.loginForm {
+    display: flex;
+    background-color: whitesmoke;
+    flex-wrap: wrap;
+    margin: 1em auto;
+    width: 60%;
+    padding: 1em;
+    border-radius: 1em;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.loginForm form,.registerForm form {
+    width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+    display: flex;
+}
+
+.input,.login-label {
+    margin-top: 5px;
+}
+
+.loginForm h3,.registerForm h3 {
+    margin-right: 1em;
+    display: inline;
+    margin-bottom: 0.5em;
+}
+
+.submit-button {
+    padding: 0.3em 2.2em;
+    border-radius: 0.5em;
+    color: white;
+    background-color: royalblue;
+    margin: 1em auto;
+    width: 100%;
+    display: block;
+    text-align: center;
+    border-color: white;
+}
+
+.rememberMe {
+    margin-top: 1em;
+}
+
+.login-line {
+    width: 100%;
+    color: #3B5998;
+    font-size: large;
+    border-width: 3px
+}
+
+
+.login-issues {
+    margin-top: 0;
+    text-align: center;
+}
+
+.login-issues li,
+.login-issues a {
+    font-weight: bold;
+    width: 100%;
+    display: inline-block;
+}
+
+.oauth2-login {
+    display: block;
+    width: 100%;
+}
+
+.oauth-navigation a:nth-of-type(2) {
+    margin-top: 1em;
+}
+
+
+.login-issues a:hover {
+    font-weight: bolder;
+    color: orange;
+}
+
+@media (max-width: 767px) {
+
+    .loginForm form,.registerForm form,.loginForm img,.registerForm img {
+        width: 100%;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    .loginForm,.registerForm {
+        width: 80%;
+    }
+}

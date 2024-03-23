@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jewelry</title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/global.css" rel="stylesheet">
+	<link href="/css/contact.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+	<script src="/js/authentication.js"></script>
+  </head>
+  
+<body>
+
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${EmailNotExisting}" class="alert alert-warning bold text-center">
+	<a href="#" onclick="dismiss()">Account with such email doesn't exist.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${successfullySentMessage}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">You have successfully sent the message.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<section id="center" class="center_shop"> 
+ <div class="container">
+  <div class="row">
+   <div class="center_shop_t clearfix">
+    <div class="col-sm-6">
+	 <div class="center_shop_tl clearfix">
+	  <h4 class="mgt" th:text="#{Contact}"></h4>
+	 </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="contact_top">
+ <div class="container">
+  <div class="row">
+   <div class="">
+	<div class="col-sm-6">
+	 <div class="detail_14 clearfix">
+	 <h2 class="mgt" th:text="#{GetInTouch}"></h2>
+		 <form th:method="POST" th:action="@{/contacts/sendMessage}">
+			 <input type="email" required name="email" class="form-control" th:placeholder="#{E-mail}">
+			 <input type="text" required name="topic" class="form-control" th:placeholder="#{Topic}">
+			 <textarea class="form-control form_1" required name="message" th:placeholder="#{Message}"></textarea>
+			 <h4><button class="button" type="submit" th:text="#{SendMessage}"></button></h4>
+		 </form>
+	</div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="contact_last">
+ <div class="container modified">
+  <div class="row">
+   <div class="contact_last_1 clearfix">
+    <div>
+	 <div class="contact_last_1l clearfix">
+	  <h2 class="mgt block text-center" th:text="#{ContactDetails}"></h2>
+	 </div>
+	</div>
+   </div>
+   <div class="contact_last_2 clearfix">
+    <div>
+	  <div class="contact_last_2i clearfix">
+	   <h4 class="bold text-center block" th:text="#{Phone}"></h4>
+	   <hr class="delimiter">
+	   <p class="block text-center">089 776 3197</p>
+       <p class="block text-center">089 850 3538</p>
+	  </div>
+	</div>
+	<div>
+	  <div class="contact_last_2i clearfix">
+	   <h4 class="bold block text-center" th:text="#{Email}"></h4>
+	   <hr class="delimiter">
+	   <p class="block text-center">ivanoviatelierjewelries@gmail.com</p>
+	  </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<th:block th:include="Footer/footer.html"></th:block>
+	
+<script>
+$(document).ready(function(){
+	/*****Fixed Menu******/
+	var secondaryNav = $('.cd-secondary-nav'),
+	   secondaryNavTopPosition = secondaryNav.offset().top;
+		$(window).on('scroll', function(){
+			if($(window).scrollTop() > secondaryNavTopPosition ) {
+				secondaryNav.addClass('is-fixed');	
+			} else {
+				secondaryNav.removeClass('is-fixed');
+			}
+		});	
+		
+});
+</script>
+
+</body>
+ 
+</html>

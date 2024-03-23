@@ -1,0 +1,19 @@
+.error-button {
+    margin: 2em auto;
+    display: block;
+}
+
+#image {
+    display: block;
+    margin: 0 auto;
+}
+
+@media(min-width: 250px) and (max-width: 767px) {
+    #image {
+        width: 300px;
+    }
+
+    .header {
+        font-size: 22px;
+    }
+}
