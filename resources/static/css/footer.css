@@ -1,0 +1,10 @@
+
+@media  (max-width: 767px){
+    .col_3 {
+        width: 100%;
+    }
+}
+
+.col-sm-3 .col_3 {
+    list-style: none;
+}

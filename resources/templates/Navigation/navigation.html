@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/fileUpload.css">
+    <link rel="stylesheet" href="/css/addProduct.css">
+   <link rel="stylesheet" href="/css/global.css">
+  <script src="/js/fileUpload.js"></script>
+</head>
+<body>
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <section id="top">
+      <div class="container">
+        <div class="row">
+          <div class="top_1 clearfix">
+            <div class="col-sm-3">
+              <div class="top_1l clearfix">
+                <ul class="mgt">
+                  <li>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-9 centered">
+              <div class="top_1r clearfix centered">
+                <ul class="nav navbar-nav nav_1 mgt navbar-right">
+                  <li class="bord_l"><a class="font_tag col_1" href="#"><i class="fa fa-phone"></i>089 776 3197 | 089 850 3538</a></li>
+                  <li sec:authorize="!isAuthenticated()" class="dropdown bord_l">
+                    <a class="font_tag border_none" th:href="@{/login}" th:text="#{Authenticate}"><span class="caret"></span></a>
+                  </li>
+                  <li sec:authorize="isAuthenticated()" class="dropdown bord_l">
+                    <form th:method="POST" th:action="@{/logout}">
+                      <button style="background: 0; border: 0; padding: 0" type="submit"><a class="font_tag border_none" th:text="#{Logout}"></a></button>
+                    </form>
+                  </li>
+                  <li sec:authorize="hasRole('OWNER')" class="dropdown bord_l">
+                    <a class="font_tag border_none" href="#" th:text="#{Admin}" data-toggle="dropdown" role="button" aria-expanded="false" id="fileUploadTrigger"><span class="caret"></span></a>
+                    <ul class="dropdown-menu drop_1" role="menu">
+                      <li>
+                        <a href="#" onclick="toggleStaticFileUploader()" th:text="#{UploadStaticPicture}"></a>
+                      </li>
+                      <li>
+                        <a href="#" onclick="toggleDynamicFileUploader()" th:text="#{AddProduct}"></a>
+                      </li>
+                      <li>
+                        <a th:href="@{/admin/orders}" th:text="#{Orders}"></a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li sec:authorize="isAuthenticated()" class="dropdown bord_l">
+                    <a class="font_tag border_none" th:href="@{/profile}" th:text="#{MyAccount}"><span class="caret"></span></a>
+                  </li>
+                  <li class="dropdown bord_l border_none" id="languageDropdown">
+                    <a class="font_tag border_none" href="#" data-toggle="dropdown" role="button" aria-expanded="false" th:text="#{Language}"><span class="caret"></span></a>
+                    <ul class="dropdown-menu drop_1" role="menu">
+                      <li><a th:href="@{/change-language(lang=bg)}"><i class="fa fa-flag"></i>Български</a></li>
+                      <li><a th:href="@{/change-language(lang=en)}"><i class="fa fa-flag"></i>English</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="clearfix cd-secondary-nav">
+      <nav class="navbar nav_t">
+        <div class="container">
+          <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><i class="fa-regular fa-gem"></i> <span class="logoName">Ivanovi Ateli</span>er</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav nav_m">
+
+              <li><a class="m_tag active_tab" th:href="@{/}" th:text="#{Home}"></a></li>
+              <li>
+                <a class="m_tag" th:href="@{/products}" role="button" th:text="#{Products}" aria-expanded="false"><span class="caret fas fa-caret-down"></span></a>
+              </li>
+              <li><a class="m_tag" th:href="@{/contacts}" th:text="#{Contacts}"></a></li>
+              <li class="dropdown">
+                <a class="m_tag" href="#" data-toggle="dropdown" role="button" aria-expanded="false" th:text="#{AboutUs}"><span class="caret"></span></a>
+                <ul class="dropdown-menu drop_3" role="menu">
+                  <li><a th:href="@{/aboutUs/faq}" th:text="#{CommonlyAskedQuestions}"></a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav mgt navbar-right nav_r">
+              <li class="dropdown"><a class="m_tag" href="#" data-toggle="dropdown"><span class="fa fa-search"></span></a>
+                <ul class="dropdown-menu drop_2" style="min-width: 300px;">
+                  <li>
+                    <div class="row_1">
+                      <div class="col-sm-12">
+                        <form id="searchForm1" class="navbar-form navbar-left" role="search">
+                          <div class="input-group">
+                            <input id="gemstoneType1" name="keyWords" type="text" class="form-control" th:placeholder="#{Search}">
+                            <span class="input-group-btn"><button class="btn btn-primary" type="submit" onclick="submitForm1()" th:text="#{Search}"></button></span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li><a class="m_tag" href="https://www.facebook.com/ivanoviatelier"><i class="fa-brands fa-facebook"></i></a></li>
+              <li><a class="m_tag" href="https://www.instagram.com/ivanoviatelier/"><i class="fa-brands fa-instagram"></i></a></li>
+            </ul>
+
+          </div>
+          <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+      </nav>
+    </section>
+
+    <div class="container1">
+      <div class="card1">
+       <a onclick="dismissStatic()"><i class="fa-solid fa-x"></i></a>
+        <h3>Качи файл</h3>
+        <div class="drop_box">
+          <header>
+            <h4>Избери файл</h4>
+          </header>
+          <p>Поддържани файлове : JPEG,PNG</p>
+          <input type="file" hidden accept=".doc,.docx,.pdf" id="fileID">
+          <form th:method="POST" th:action="@{/upload}" enctype="multipart/form-data">
+          <input type="file" name="file" multiple="multiple" placeholder="Избери файл" class="btn">
+          <button type="submit" class="send">Изпрати</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container2">
+      <section class="body">
+        <form th:method="POST" th:action="@{/admin/product/upload}" enctype="multipart/form-data">
+
+          <a onclick="dismissDynamic()"><i class="fa-solid fa-x"></i></a>
+          <h3>Вписване на артикул</h3>
+          <label for="name">Име на артикул: </label>
+          <input required id="name" name="name" type="text">
+          <label for="price">Цена: </label>
+          <input required type="text" name="price" id="price">
+          <label for="gemstone">Камък/Камъни,вградени в бижуто: </label>
+          <input required type="text" name="gemstone" id="gemstone">
+          <label for="keyWords">Ключови думи: </label>
+          <input required type="text" name="keyWords" id="keyWords">
+          <label id="stockLabel" for="inStock">Не е в наличност:</label>
+          <div class="stock">
+            <input id="inStock" type="radio" name="inStock" value="true" onchange="togglePriceInput()">
+          </div>
+          <br>
+          <label for="jewelry">Вид артикул:</label>
+
+          <select required name="type" id="jewelry" onchange="toggleGemstoneOriginInput()">
+            <option value="Ring">Пръстен</option>
+            <option value="Pendant">Висулка</option>
+            <option value="Earring">Обици</option>
+            <option value="Bracelet">Гривна</option>
+            <option value="Gemstone">Камък</option>
+          </select>
+
+          <label class="gemstone" for="gemstoneOrigin">Произход на камък</label>
+          <input class="gemstone" type="text" name="gemstoneOrigin" id ="gemstoneOrigin">
+
+            <label for="mainPicturePath">Главна снимка</label>
+            <input type="file" name="mainPicturePath" id="mainPicturePath" required>
+            <label for="images">Допълнителни снимки (минимум 2)</label>
+            <input type="file" name="images" id="images"  multiple="multiple" required>
+            <label for="video">Видео (Не е задължително)</label>
+            <input type="file" name="video" id="video">
+
+          <label for="description">Описание: </label>
+          <textarea required id="description" name="description" rows="7" cols="50"></textarea>
+          <button type="submit" onclick="submitFormUpload()">Създай артикул</button>
+        </form>
+      </section>
+    </div>
+</body>
+</html>

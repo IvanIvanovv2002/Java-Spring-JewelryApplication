@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Login Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/global.css" rel="stylesheet">
+  <script src="/js/jquery-2.1.1.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/authentication.js"></script>
+</head>
+<body>
+
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<input type="hidden" name="_method" value="PATCH">
+<input type="hidden" name="_method" value="POST">
+  <section class="loginForm">
+    <img src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1705354426/staticImages/cc90cd28-5a93-4661-adff-396cc003205a.jpg">
+    <form th:method="POST" th:action="@{/login}">
+      <h3 th:text="#{Login}"></h3>
+      <div class="form-floating">
+        <label class="login-label" for="floatingInput" th:text="#{Email}"></label>
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+        <input required name="email" type="email" class="form-control input" id="floatingInput" th:placeholder="#{Email}">
+
+        <label class="login-label" for="floatingPassword" th:text="#{Password}"></label>
+        <i class="fas fa-key"></i>
+        <input required type="password" minlength="5" maxlength="25" name="password" class="form-control input" id="floatingPassword"  th:placeholder="#{Password}">
+      </div>
+
+      <button type="submit" class="submit-button" th:text="#{Login}"></button>
+
+      <div th:if="${errorLogin}" class="alert alert-danger bold">
+        <a href="#" onclick="dismiss()"><i class="fa-solid fa-x" ></i></a>
+        Invalid credentials or account is not verified !
+      </div>
+
+      <div th:if="${errorRegister}" class="alert alert-danger bold">
+        <a href="#" onclick="dismiss()"><i class="fa-solid fa-x" ></i></a>
+        Passwords didn't match during account creation !
+      </div>
+
+      <div th:if="${emailPresent}" class="alert alert-danger bold">
+        <a href="#" onclick="dismiss()"><i class="fa-solid fa-x" ></i></a>
+        Such email already exist.
+      </div>
+
+      <ul class="login-issues">
+        <li><a href="#" onclick="changePages('registerPage')" th:text="#{CreateAccount}"></a></li>
+      </ul>
+
+      <hr class="login-line">
+
+      <ul class="oauth-navigation">
+        <a type="submit" th:href="@{http://localhost:1010/oauth2/authorization/google}" class="btn btn-warning oauth2-login" th:text="#{LoginGoogle}">
+          <i class="fa-brands fa-google"></i>
+        </a>
+      </ul>
+    </form>
+  </section>
+
+<section class="registerForm">
+  <img src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1705354426/staticImages/cc90cd28-5a93-4661-adff-396cc003205a.jpg">
+  <form th:method="POST" th:action="@{/register}">
+    <h3 th:text="#{Registration}"></h3>
+    <div class="form-floating">
+
+      <label class="login-label" for="email" th:text="#{Email}"></label>
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+      <input name="email" required type="email" class="form-control input" id="email" th:placeholder="#{Email}">
+
+      <label class="login-label" for="password" th:text="#{Password}"></label>
+      <i class="fas fa-key"></i>
+      <input name="password" type="password" minlength="5" maxlength="25" class="form-control input" id="password" required th:placeholder="#{Password}">
+
+      <label class="login-label" for="repeatPassword" th:text="#{RepeatPassword}"></label>
+      <i class="fas fa-key"></i>
+      <input name="repeatPassword" minlength="5" maxlength="25" type="password" required class="form-control input" id="repeatPassword" th:placeholder="#{RepeatPassword}">
+
+    </div>
+
+    <button type="submit" class="submit-button" th:text="#{CreateAccount}"></button>
+
+    <ul class="login-issues">
+      <li><a href="#" onclick="changePages('loginPage')" th:text="#{HaveAccount}"></a></li>
+    </ul>
+
+    <hr class="login-line">
+
+    <ul class="oauth-navigation">
+      <a type="submit" th:href="@{http://localhost:1010/oauth2/authorization/google}"  class="btn btn-warning oauth2-login" th:text="#{LoginGoogle}">
+        <i class="fa-brands fa-google"></i>
+      </a>
+    </ul>
+  </form>
+</section>
+
+
+<th:block th:include="Footer/footer.html"></th:block>
+</body>
+</html>

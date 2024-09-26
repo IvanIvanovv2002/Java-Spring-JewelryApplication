@@ -1,0 +1,60 @@
+
+
+spring:
+
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jewelry_app?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${DB_USERNAME}
+    password:
+
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  messages:
+    basename: languages/messages
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_OAUTH2_ID}
+            client-secret: ${GOOGLE_OAUTH2_SECRET}
+          facebook:
+            client-id: 1525784998270523
+            client-secret: b426fbb7dab4364a7dc25f0c4f5dbdbc
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 1010
+  tomcat:
+    max-swallow-size: -1

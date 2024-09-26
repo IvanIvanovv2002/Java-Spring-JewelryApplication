@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link rel="stylesheet" href="/css/global.css">
+</head>
+<body id="footer-body">
+<section id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="footer_1 clearfix">
+        <div class="col-sm-3">
+          <div class="footer_1i clearfix">
+            <a class="navbar-brand"><i class="fa-regular fa-gem"></i> <span class="logoName">Ivanovi Ateli</span>er</a>
+            <h5 class="col_3 normal"><span class="block text-center" th:text="#{Phone}"></span> <a class="col text-center">089 776 3197 | 089 850 3538</a></h5>
+            <h5 class="col_3 normal"><span class="block text-center" th:text="#{Email}"></span> <a class="col text-center">ivanoviatelierjewelries@gmail.com</a></h5>
+            <form id="searchForm2" class="navbar-form navbar-left" role="search">
+              <div class="input-group">
+                <input id="gemstoneType2" name="keyWords" type="text" class="form-control" th:placeholder="#{Search}">
+                <span class="input-group-btn"><button class="btn btn-primary" type="submit" onclick="submitForm2()" th:text="#{Search}"></button></span>
+              </div>
+            </form>
+            <ul class="social-network social-circle">
+              <li><a href="https://www.facebook.com/ivanoviatelier" target="_blank" class="icoFacebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+              <li><a href="https://www.instagram.com/ivanoviatelier/" target="_blank" class="icoTwitter" title="Twitter"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a class="icoShoppingCart" th:href="@{/cart}" title="Shopping Cart"><i class="fa fa-shopping-cart"></i></a></li>
+              <li><a class="icoPhone" th:href="@{/contacts}" title="Contact us"><i class="fa fa-phone"></i></a></li>
+              <li><a class="iconQuestionCircle" th:href="@{/aboutUs/faq}" title="Need help ?"><i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="footer_1i1 clearfix">
+            <h4 class="mgt" th:text="#{Information}"></h4>
+            <ul>
+              <li class="col_3"><a class="col_3" th:href="@{/aboutUs/faq}" th:text="#{FrequentlyAskedQuestions}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{/contacts}" th:text="#{Contact}"></a></li>
+              <li class="col_3"><a class="col_3" href="#" th:text="#{PrivacyPolicy}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{'/aboutUs/faq#delivery'}" th:text="#{DeliveryInformation}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{'/aboutUs/faq#guarantees'}" th:text="#{OrdersAndReturns}"></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="footer_1i1 clearfix">
+            <h4 class="mgt" th:text="#{Information}"></h4>
+            <ul>
+              <li class="col_3"><a class="col_3" th:href="@{/}" th:text="#{Home}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{/profile}" th:text="#{MyAccount}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{/products}" th:text="#{Products}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{/cart}" th:text="#{ShoppingCart}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{/login}" th:text="#{Registration}"></a></li>
+              <li class="col_3"><a class="col_3" th:href="@{/login}" th:text="#{Login}"></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="footer_1i1 clearfix">
+            <h4 class="mgt" th:text="#{Newsletters}"></h4>
+            <p class="col_3" th:text="#{SignMailingList}"></p>
+            <form th:action="@{/newsletter/subscribe}" th:method="PATCH">
+              <input class="form-control" th:placeholder="#{Email}" name="email" type="email">
+              <h5>
+                <button class="button" type="submit" href="#" th:text="#{Subscribe}"></button>
+              </h5>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="footer_bottom">
+  <div class="container">
+    <div class="row">
+      <div class="footer_2 text-center clearfix">
+        <div class="col-sm-12">
+          <p class="mgt col_3">All Rights Reserved | Design by Ivan Ivanov &copy;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

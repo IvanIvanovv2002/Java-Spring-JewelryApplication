@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jewelry</title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/global.css" rel="stylesheet">
+	<link href="/css/index.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link rel="stylesheet" href="/css/carousel.css">
+	<script src="/js/jquery-2.1.1.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/authentication.js"></script>
+  </head>
+  
+<body>
+
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${registered}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Account created, now in order to sign in, you need to verify it though your email.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${successfullyOrdered}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">You have successfully made an order !<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${successfullySubscribed}" class="alert alert-success bold text-center">
+    <a href="#" onclick="dismiss()">You have successfully subscribed !<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${wrongEmailForSubscription}" class="alert alert-warning bold text-center">
+    <a href="#" onclick="dismiss()">The email linked to your account isn't the same as the one you typed !<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${verifiedAccount}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Account verified, now you can sign in !<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${itemDeleted}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Артикула беше изтрит успешно.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<section id="center" class="center_home">
+ <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
+	  <!-- Overlay -->
+	  <div class="overlay"></div>
+
+	  <!-- Indicators -->
+	 <ol class="carousel-indicators">
+
+		  <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+		  <li data-target="#bs-carousel" data-slide-to="1" class=""></li>
+		  <li data-target="#bs-carousel" data-slide-to="2" class=""></li>
+		  <li data-target="#bs-carousel" data-slide-to="3" class=""></li>
+		  <li data-target="#bs-carousel" data-slide-to="4" class=""></li>
+	 </ol>
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner">
+		<div class="item slides active">
+		  <div class="slide-1"></div>
+		  <div class="hero"></div>
+		</div>
+		<div class="item slides">
+		  <div class="slide-2"></div>
+		  <div class="hero hero_1"></div>
+		</div>
+		<div class="item slides">
+		  <div class="slide-3"></div>
+		  <div class="hero"></div>
+		</div>
+		<div class="item slides">
+			<div class="slide-4"></div>
+			<div class="hero"></div>
+		</div>
+		<div class="item slides">
+			<div class="slide-5"></div>
+			<div class="hero"></div>
+		</div>
+	  </div>
+	</div>
+</section>
+
+<section id="list">
+ <div class="container">
+  <div class="row">
+   <div class="list_1 clearfix">
+    <div class="col-sm-3 space_all">
+	 <div class="list_1i text-center clearfix">
+	  <span><i class="fa fa-thumbs-o-up"></i></span>
+	  <h4><a th:text="#{QualityWorkManShip}"></a></h4>
+	  <hr>
+	  <p th:text="#{QualityWS-Info}"></p>
+	  <h5 class="normal"><a class="button_1" href="#">READ MORE</a></h5>
+	 </div>
+	</div>
+	<div class="col-sm-3 space_all">
+	 <div class="list_1i text-center clearfix">
+	  <span><i class="fa fa-rocket"></i></span>
+	  <h4><a th:text="#{Delivery}"></a></h4>
+	  <hr>
+	  <p th:text="#{Delivery-Info}"></p>
+	  <h5 class="normal"><a class="button_1" href="#">READ MORE</a></h5>
+	 </div>
+	</div>
+	<div class="col-sm-3 space_all">
+	 <div class="list_1i text-center clearfix">
+	  <span><i class="far fa-gem"></i></span>
+	  <h4><a th:text="#{Gemstones}"></a></h4>
+	  <hr>
+	  <p th:text="#{Gemstones-Info}"></p>
+	  <h5 class="normal"><a class="button_1" href="#">READ MORE</a></h5>
+	 </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="feature">
+ <div class="container">
+  <div class="row">
+   <div class="feature_1 text-center clearfix">
+    <div class="col-sm-12">
+	   <h3 class="mgt" th:text="#{POPULAR_PRODUCTS}"></h3>
+	   <hr>
+	</div>
+   </div>
+   <div class="feature_2 clearfix">
+    <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+					<div class="col-sm-3" th:each="ring : ${rings}">
+					 <div class="feature_2im clearfix">
+					   	    <div class="feature_2im1 clearfix">
+					     <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${ring.discriminator}, id=${ring.id})}" ><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${ring.discriminator}, id=${ring.id})}" th:src="${ring.getMainPicturePath()}" class="iw" alt="abc"></a>
+					    </div>
+							<div class="feature_2im2 clearfix">
+							 <h6 class="pull-right mgt"><a class="bg_2" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+							 <div class="col-sm-6 space_left">
+							   <h6>
+								   <a th:if="${ring.notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+								   <a th:if="${!ring.notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+							   </h6>
+							 </div>
+							</div>
+					 </div>
+					 <div class="item_last text-center clearfix">
+					  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${ring.discriminator}, id=${ring.id})}" th:text="${ring.getName()}"></a></h4>
+					  <h6>
+					   <span class="span_1 col_1 bold" th:text="${ring.notInStock} ? #{NoPrice} : ${ring.price} + ' BGN'"></span>
+					    </h6>
+					 </div>
+					</div>
+                </div>
+                <div class="item" >
+					<div class="col-sm-3" th:each="bracelet : ${bracelets}">
+						<div class="feature_2im clearfix">
+							<div class="feature_2im1 clearfix">
+								<a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${bracelet.discriminator}, id=${bracelet.id})}" ><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${bracelet.discriminator}, id=${bracelet.id})}" th:src="${bracelet.getMainPicturePath()}" class="iw" alt="abc"></a>
+							</div>
+							<div class="feature_2im2 clearfix">
+								<h6 class="pull-right mgt"><a class="bg_2" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+								<div class="col-sm-6 space_left">
+									<h6>
+										<a th:if="${bracelet.notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+										<a th:if="${!bracelet.notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+									</h6>
+								</div>
+							</div>
+						</div>
+						<div class="item_last text-center clearfix">
+							<h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${bracelet.discriminator}, id=${bracelet.id})}" th:text="${bracelet.getName()}"></a></h4>
+							<h6>
+								<span class="span_1 col_1 bold" th:text="${bracelet.notInStock} ? #{NoPrice} : ${bracelet.price} + ' BGN'"></span>
+							</h6>
+						</div>
+					</div>
+            </div>
+			<div class="item">
+				<div class="col-sm-3" th:each="earring : ${earrings}">
+					<div class="feature_2im clearfix">
+						<div class="feature_2im1 clearfix">
+							<a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${earring.discriminator}, id=${earring.id})}" ><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${earring.discriminator}, id=${earring.id})}" th:src="${earring.getMainPicturePath()}" class="iw" alt="abc"></a>
+						</div>
+						<div class="feature_2im2 clearfix">
+							<h6 class="pull-right mgt"><a class="bg_2" href="#" th:text="#{HandMade}"></a></h6>
+						</div>
+						<div class="feature_2im4 clearfix">
+							<div class="col-sm-6 space_left">
+								<h6>
+									<a th:if="${earring.notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+									<a th:if="${!earring.notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+								</h6>
+							</div>
+						</div>
+						</div>
+						<div class="item_last text-center clearfix">
+							<h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${earring.discriminator}, id=${earring.id})}" th:text="${earring.getName()}"></a></h4>
+							<h6>
+								<span class="span_1 col_1 bold" th:text="${earring.notInStock} ? #{NoPrice} : ${earring.price} + ' BGN'"></span>
+							</h6>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3 featured" th:each="pendant : ${pendants}">
+						<div class="feature_2im clearfix">
+							<div class="feature_2im1 clearfix">
+								<a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${pendant.discriminator}, id=${pendant.id})}" ><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${pendant.discriminator}, id=${pendant.id})}" th:src="${pendant.getMainPicturePath()}" class="iw" alt="abc"></a>
+							</div>
+							<div class="feature_2im2 clearfix">
+								<h6 class="pull-right mgt"><a class="bg_2" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+								<div class="col-sm-6 space_left">
+									<h6>
+										<a th:if="${pendant.notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+										<a th:if="${!pendant.notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+									</h6>
+								</div>
+							</div>
+						</div>
+						<div class="item_last text-center clearfix">
+							<h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${pendant.discriminator}, id=${pendant.id})}" th:text="${pendant.getName()}"></a></h4>
+							<h6>
+								<span class="span_1 col_1 bold" th:text="${pendant.notInStock} ? #{NoPrice} : ${pendant.price} + ' BGN'"></span>
+							</h6>
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<div class="col-sm-3" th:each="gemstone : ${gemstones}">
+						<div class="feature_2im clearfix">
+							<div class="feature_2im1 clearfix">
+								<a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${gemstone.discriminator}, id=${gemstone.id})}" ><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${gemstone.discriminator}, id=${gemstone.id})}" th:src="${gemstone.getMainPicturePath()}" class="iw" alt="abc"></a>
+							</div>
+							<div class="feature_2im4 clearfix">
+								<div class="col-sm-6 space_left">
+									<h6>
+										<a th:if="${!gemstone.notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+									</h6>
+								</div>
+							</div>
+						</div>
+						<div class="item_last text-center clearfix">
+							<h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${gemstone.discriminator}, id=${gemstone.id})}" th:text="${gemstone.getName()}"></a></h4>
+							<h6>
+								<span th:if="${gemstone.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${gemstone.discriminator}, id=${gemstone.id})}" th:text="${gemstone.notInStock} ? #{NoPrice} : ${gemstone.price} + ' BGN ~ ' + #{AveragePrice}"></span>
+							</h6>
+						</div>
+					</div>
+				</div>
+        </div>
+	<div class="feature_2_last text-center clearfix">
+            <div class="col-sm-12">
+                <!-- Controls -->
+                <div class="controls">
+                    <a class="left fa fa-chevron-left btn btn-success" href="#carousel-example" data-slide="prev"></a>
+					<a class="right fa fa-chevron-right btn btn-success" href="#carousel-example" data-slide="next"></a>
+                </div>
+            </div>
+        </div>
+   </div>
+  </div>
+ </div>
+ </div>
+</section>
+
+<section id="collect">
+ <div class="container">
+  <div class="row">
+   <div class="feature_1 text-center clearfix">
+    <div class="col-sm-12">
+	   <h3 class="mgt" th:text="#{Samples}"> </h3>
+	   <hr>
+	</div>
+   </div>
+   <div class="collect_top text-center clearfix">
+    <div class="col-sm-12">
+	 <ul class="nav_tab_1 mgt">
+			  <li class="active"><a data-toggle="tab" href="#home" th:text="#{Mixed}"></a></li>
+			  <li class=""><a data-toggle="tab" href="#menu1" th:text="#{Rings}"></a></li>
+			  <li><a data-toggle="tab" href="#menu2" th:text="#{Pendants}"></a></li>
+			  <li class=""><a data-toggle="tab" href="#menu3" th:text="#{Earrings}"></a></li>
+			  <li class=""><a data-toggle="tab" href="#menu4" th:text="#{Bracelets}"></a></li>
+			<li class=""><a data-toggle="tab" href="#menu5" th:text="#{Gemstones}"></a></li>
+     </ul>
+	</div>
+   </div>
+   <div class="tab-content clearfix">
+	   <input type="hidden" th:each="jewelry : ${randomizedJewelries}">
+			  <div id="home" class="tab-pane fade clearfix active in">
+				  <div class="click clearfix">
+					  <div class="collcet_1 clearfix">
+						  <div class="col-sm-6">
+							  <div class="collcet_1l clearfix">
+								  <div class="feature_2im clearfix">
+									  <div class="feature_2im1 clearfix">
+										  <div class="main-picture">
+											  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(0).getDiscriminator()}, id=${randomizedJewelries.get(0).getId()})}"> <img th:src="${randomizedJewelries.get(0).getMainPicturePath()}" class="iw" alt="abc"></a>
+										  </div>
+									  </div>
+									  <div class="feature_2im2 clearfix">
+										  <h6 th:unless="${randomizedJewelries.get(0).getDiscriminator().equals('Gemstone')}"  class="pull-right mgt"><a class="bg_4" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(0).getDiscriminator()}, id=${randomizedJewelries.get(0).getId()})}" th:text="#{HandMade}"></a></h6>
+									  </div>
+									  <div class="feature_2im4 clearfix">
+										  <div class="col-sm-6 space_left">
+											  <h6>
+												  <a th:if="${randomizedJewelries.get(0).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+												  <a th:if="${!randomizedJewelries.get(0).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+											  </h6>
+										  </div>
+									  </div>
+								  </div>
+								  <div class="item_last text-center clearfix">
+									  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(0).getDiscriminator()}, id=${randomizedJewelries.get(0).getId()})}" th:text="${randomizedJewelries.get(0).getName()}"></a></h4>
+									  <h6>
+										  <span th:unless="${randomizedJewelries.get(0).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(0).discriminator}, id=${randomizedJewelries.get(0).id})}" th:text="${randomizedJewelries.get(0).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(0).price} + ' BGN'"></span>
+										  <span th:if="${randomizedJewelries.get(0).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(0).discriminator}, id=${randomizedJewelries.get(0).id})}" th:text="${randomizedJewelries.get(0).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(0).price} + ' BGN ~ ' + #{AveragePrice}"></span>
+									  </h6>
+								  </div>
+							  </div>
+						  </div>
+						  <div class="col-sm-6">
+							  <div class="collcet_1r mgt clearfix">
+								  <div class="col-sm-6 space_left">
+									  <div class="feature_2im clearfix">
+										  <div class="feature_2im1 clearfix">
+											  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(1).getDiscriminator()}, id=${randomizedJewelries.get(1).getId()})}">
+												  <img th:src="${randomizedJewelries.get(1).getMainPicturePath()}" class="iw smaller" alt="abc">
+											  </a>
+										  </div>
+										  <div class="feature_2im2 clearfix">
+											  <h6 th:unless="${randomizedJewelries.get(1).getDiscriminator().equals('Gemstone')}" class="pull-right mgt"><a class="bg_4" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(1).getDiscriminator()}, id=${randomizedJewelries.get(1).getId()})}" th:text="#{HandMade}"></a></h6>
+										  </div>
+										  <div class="feature_2im4 clearfix">
+											  <div class="col-sm-6 space_left">
+												  <h6>
+													  <a th:if="${randomizedJewelries.get(1).notInStock}" class="bg_3"  th:text="#{Sample}"></a>
+													  <a th:if="${!randomizedJewelries.get(1).notInStock}" class="bg_3" th:text="#{InStock}"></a>
+												  </h6>
+											  </div>
+
+										  </div>
+									  </div>
+									  <div class="item_last text-center clearfix">
+										  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(1).getDiscriminator()}, id=${randomizedJewelries.get(1).getId()})}" th:text="${randomizedJewelries.get(1).getName()}"></a></h4>
+										  <h6>
+											  <span th:unless="${randomizedJewelries.get(1).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(1).discriminator}, id=${randomizedJewelries.get(1).id})}" th:text="${randomizedJewelries.get(1).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(1).price} + ' BGN'"></span>
+											  <span th:if="${randomizedJewelries.get(1).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(1).discriminator}, id=${randomizedJewelries.get(1).id})}" th:text="${randomizedJewelries.get(1).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(1).price} + ' BGN ~ ' + #{AveragePrice}"></span>
+										  </h6>
+									  </div>
+								  </div>
+								  <div class="col-sm-6 space_left">
+									  <div class="feature_2im clearfix">
+										  <div class="feature_2im1 clearfix">
+											  <a  th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(2).getDiscriminator()}, id=${randomizedJewelries.get(2).getId()})}"><img th:src="${randomizedJewelries.get(2).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+										  </div>
+										  <div class="feature_2im2 clearfix">
+											  <h6 th:unless="${randomizedJewelries.get(2).getDiscriminator().equals('Gemstone')}" class="pull-right mgt"><a class="bg_4" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(2).getDiscriminator()}, id=${randomizedJewelries.get(2).getId()})}" th:text="#{HandMade}"></a></h6>
+										  </div>
+										  <div class="feature_2im4 clearfix">
+											  <div class="col-sm-6 space_left">
+												  <h6>
+													  <a th:if="${randomizedJewelries.get(2).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+													  <a th:if="${!randomizedJewelries.get(2).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+												  </h6>
+											  </div>
+										  </div>
+									  </div>
+									  <div class="item_last text-center clearfix">
+										  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(2).getDiscriminator()}, id=${randomizedJewelries.get(2).getId()})}" th:text="${randomizedJewelries.get(2).getName()}"></a></h4>
+										  <h6>
+											  <span th:unless="${randomizedJewelries.get(2).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(2).discriminator}, id=${randomizedJewelries.get(2).id})}" th:text="${randomizedJewelries.get(2).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(2).price} + ' BGN'"></span>
+											  <span th:if="${randomizedJewelries.get(2).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(2).discriminator}, id=${randomizedJewelries.get(2).id})}" th:text="${randomizedJewelries.get(2).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(2).price} + ' BGN ~ ' + #{AveragePrice}"></span>
+										  </h6>
+									  </div>
+								  </div>
+							  </div>
+							  <div class="collcet_1r clearfix">
+								  <div class="col-sm-6 space_left">
+									  <div class="feature_2im clearfix">
+										  <div class="feature_2im1 clearfix">
+											  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(3).getDiscriminator()}, id=${randomizedJewelries.get(3).getId()})}"><img th:src="${randomizedJewelries.get(3).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+										  </div>
+										  <div class="feature_2im2 clearfix">
+											  <h6 th:unless="${randomizedJewelries.get(3).getDiscriminator().equals('Gemstone')}" class="pull-right mgt"><a class="bg_4" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(3).getDiscriminator()}, id=${randomizedJewelries.get(3).getId()})}" th:text="#{HandMade}"></a></h6>
+										  </div>
+										  <div class="feature_2im4 clearfix">
+											  <div class="col-sm-6 space_left">
+												 <h6>
+													  <a th:if="${randomizedJewelries.get(3).notInStock}" class="bg_3"  th:text="#{Sample}"></a>
+													  <a th:if="${!randomizedJewelries.get(3).notInStock}" class="bg_3" th:text="#{InStock}"></a>
+												</h6>
+											  </div>
+										  </div>
+									  </div>
+									  <div class="item_last text-center clearfix">
+										  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(3).getDiscriminator()}, id=${randomizedJewelries.get(3).getId()})}" th:text="${randomizedJewelries.get(3).getName()}"></a></h4>
+										  <h6>
+											  <span th:unless="${randomizedJewelries.get(3).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(3).discriminator}, id=${randomizedJewelries.get(3).id})}" th:text="${randomizedJewelries.get(3).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(3).price} + ' BGN'"></span>
+											  <span th:if="${randomizedJewelries.get(3).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(3).discriminator}, id=${randomizedJewelries.get(3).id})}" th:text="${randomizedJewelries.get(3).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(3).price} + ' BGN ~ ' + #{AveragePrice}"></span>
+										  </h6>
+									  </div>
+								  </div>
+								  <div class="col-sm-6 space_left">
+									  <div class="feature_2im clearfix">
+										  <div class="feature_2im1 clearfix">
+											  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(4).getDiscriminator()}, id=${randomizedJewelries.get(4).getId()})}"><img th:src="${randomizedJewelries.get(4).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+										  </div>
+										  <div class="feature_2im2 clearfix">
+											  <h6 th:unless="${randomizedJewelries.get(4).getDiscriminator().equals('Gemstone')}" class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>										  </div>
+										  <div class="feature_2im4 clearfix">
+											  <div class="col-sm-6 space_left">
+												  <h6>
+													  <a th:if="${randomizedJewelries.get(4).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+													  <a th:if="${!randomizedJewelries.get(4).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+												  </h6>
+											  </div>
+										  </div>
+									  </div>
+									  <div class="item_last text-center clearfix">
+										  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(4).getDiscriminator()}, id=${randomizedJewelries.get(4).getId()})}" th:text="${randomizedJewelries.get(4).getName()}"></a></h4>
+										  <h6>
+											  <span th:unless="${randomizedJewelries.get(4).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(4).discriminator}, id=${randomizedJewelries.get(4).id})}" th:text="${randomizedJewelries.get(4).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(4).price} + ' BGN'"></span>
+											  <span th:if="${randomizedJewelries.get(4).getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedJewelries.get(4).discriminator}, id=${randomizedJewelries.get(4).id})}" th:text="${randomizedJewelries.get(4).notInStock} ? #{NoPrice} : ${randomizedJewelries.get(4).price} + ' BGN ~ ' + #{AveragePrice}"></span>
+										  </h6>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+			  <div id="menu1" class="tab-pane fade clearfix" th:each="ring : ${randomizedRings}">
+				 <div class="click clearfix">
+					<div class="collcet_1 clearfix">
+    <div class="col-sm-6">
+	  <div class="collcet_1l clearfix">
+	   <div class="feature_2im clearfix">
+					  <div class="feature_2im1 clearfix">
+						  <div class="main-picture">
+							  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(0).getDiscriminator()}, id=${randomizedRings.get(0).getId()})}"><img th:src="${randomizedRings.get(0).getMainPicturePath()}" class="iw" alt="abc"></a>
+						  </div>
+					  </div>
+							<div class="feature_2im2 clearfix">
+								<h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+							 <div class="col-sm-6 space_left">
+								 <h6>
+									 <a th:if="${randomizedRings.get(0).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+									 <a th:if="${!randomizedRings.get(0).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+								 </h6>
+							 </div>
+							</div>
+					 </div>
+	   <div class="item_last text-center clearfix">
+					  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(0).getDiscriminator()}, id=${randomizedRings.get(0).getId()})}" th:text="${randomizedRings.get(0).getName()}"></a></h4>
+					  <h6>
+					   <span class="span_1 col_1 bold" th:text="${randomizedRings.get(0).getNotInStock()} ? #{NoPrice} : ${randomizedRings.get(0).getPrice()} + ' BGN'"></span>
+					    </h6>
+					 </div>
+	  </div>
+	</div>
+	<div class="col-sm-6">
+	  <div class="collcet_1r mgt clearfix">
+	   <div class="col-sm-6 space_left">
+					 <div class="feature_2im clearfix">
+					   	    <div class="feature_2im1 clearfix">
+					     <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(1).getDiscriminator()}, id=${randomizedRings.get(1).getId()})}">
+							 <img th:src="${randomizedRings.get(1).getMainPicturePath()}" class="iw smaller" alt="abc">
+						 </a>
+					    </div>
+							<div class="feature_2im2 clearfix">
+								<h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+							 <div class="col-sm-6 space_left">
+								 <h6>
+									 <a th:if="${randomizedRings.get(1).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+									 <a th:if="${!randomizedRings.get(1).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+								 </h6>
+							 </div>
+							</div>
+					 </div>
+					 <div class="item_last text-center clearfix">
+					  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(1).getDiscriminator()}, id=${randomizedRings.get(1).getId()})}" th:text="${randomizedRings.get(1).getName()}"></a></h4>
+					  <h6>
+					   <span class="span_1 col_1 bold" th:text="${randomizedRings.get(1).getNotInStock()} ? #{NoPrice} : ${randomizedRings.get(1).getPrice()} + ' BGN'"></span>
+					    </h6>
+					 </div>
+					</div>
+	   <div class="col-sm-6 space_left">
+					 <div class="feature_2im clearfix">
+					   	    <div class="feature_2im1 clearfix">
+					     <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(2).getDiscriminator()}, id=${randomizedRings.get(2).getId()})}"><img th:src="${randomizedRings.get(2).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+					    </div>
+							<div class="feature_2im2 clearfix">
+								<h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+							 <div class="col-sm-6 space_left">
+								 <h6>
+									 <a th:if="${randomizedRings.get(2).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+									 <a th:if="${!randomizedRings.get(2).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+								 </h6>
+							 </div>
+							</div>
+					 </div>
+					 <div class="item_last text-center clearfix">
+					  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(2).getDiscriminator()}, id=${randomizedRings.get(2).getId()})}" th:text="${randomizedRings.get(2).getName()}"></a></h4>
+					  <h6>
+					   <span class="span_1 col_1 bold" th:text="${randomizedRings.get(2).getNotInStock()} ? #{NoPrice} : ${randomizedRings.get(2).getPrice()} + ' BGN'"></span>
+					    </h6>
+					 </div>
+					</div>
+	  </div>
+	  <div class="collcet_1r clearfix">
+		  <div class="col-sm-6 space_left">
+			  <div class="feature_2im clearfix">
+				  <div class="feature_2im1 clearfix">
+					  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(3).getDiscriminator()}, id=${randomizedRings.get(3).getId()})}"><img th:src="${randomizedRings.get(3).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+				  </div>
+				  <div class="feature_2im2 clearfix">
+					  <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+				  </div>
+				  <div class="feature_2im4 clearfix">
+					  <div class="col-sm-6 space_left">
+						  <h6>
+							  <a th:if="${randomizedRings.get(3).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+							  <a th:if="${!randomizedRings.get(3).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+						  </h6>
+					  </div>
+				  </div>
+			  </div>
+			  <div class="item_last text-center clearfix">
+				  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(3).getDiscriminator()}, id=${randomizedRings.get(3).getId()})}" th:text="${randomizedRings.get(3).getName()}"></a></h4>
+				  <h6>
+					  <span class="span_1 col_1 bold" th:text="${randomizedRings.get(3).getNotInStock()} ? #{NoPrice} : ${randomizedRings.get(3).getPrice()} + ' BGN'"></span>
+				  </h6>
+			  </div>
+		  </div>
+		  <div class="col-sm-6 space_left">
+			  <div class="feature_2im clearfix">
+				  <div class="feature_2im1 clearfix">
+					  <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(4).getDiscriminator()}, id=${randomizedRings.get(4).getId()})}"><img th:src="${randomizedRings.get(4).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+				  </div>
+				  <div class="feature_2im2 clearfix">
+					  <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+				  </div>
+				  <div class="feature_2im4 clearfix">
+					  <div class="col-sm-6 space_left">
+						  <h6>
+							  <a th:if="${randomizedRings.get(4).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+							  <a th:if="${!randomizedRings.get(4).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+						  </h6>
+					  </div>
+				  </div>
+			  </div>
+			  <div class="item_last text-center clearfix">
+				  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedRings.get(4).getDiscriminator()}, id=${randomizedRings.get(4).getId()})}" th:text="${randomizedRings.get(4).getName()}"></a></h4>
+				  <h6>
+					  <span class="span_1 col_1 bold" th:text="${randomizedRings.get(4).getNotInStock()} ? #{NoPrice} : ${randomizedRings.get(4).getPrice()} + ' BGN'"></span>
+				  </h6>
+			  </div>
+		  </div>
+	  </div>
+	</div>
+   </div>
+			   </div>
+			  </div>
+	   <div id="menu2" class="tab-pane fade clearfix" th:each="pendant : ${randomizedPendants}">
+		   <div class="click clearfix">
+			   <div class="collcet_1 clearfix">
+				   <div class="col-sm-6">
+					   <div class="collcet_1l clearfix">
+						   <div class="feature_2im clearfix">
+							   <div class="feature_2im1 clearfix">
+								   <div class="main-picture">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(0).getDiscriminator()}, id=${randomizedPendants.get(0).getId()})}"><img th:src="${randomizedPendants.get(0).getMainPicturePath()}" class="iw" alt="abc"></a>
+								   </div>
+							   </div>
+							   <div class="feature_2im2 clearfix">
+								   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							   </div>
+							   <div class="feature_2im4 clearfix">
+								   <div class="col-sm-6 space_left">
+									   <h6>
+										   <a th:if="${randomizedPendants.get(0).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+										   <a th:if="${!randomizedPendants.get(0).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+									   </h6>
+								   </div>
+							   </div>
+						   </div>
+						   <div class="item_last text-center clearfix">
+							   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(0).getDiscriminator()}, id=${randomizedPendants.get(0).getId()})}" th:text="${randomizedPendants.get(0).getName()}"></a></h4>
+							   <h6>
+								   <span class="span_1 col_1 bold" th:text="${randomizedPendants.get(0).getNotInStock()} ? #{NoPrice} : ${randomizedPendants.get(0).getPrice()} + ' BGN'"></span>
+							   </h6>
+						   </div>
+					   </div>
+				   </div>
+				   <div class="col-sm-6">
+					   <div class="collcet_1r mgt clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(1).getDiscriminator()}, id=${randomizedPendants.get(1).getId()})}">
+										   <img th:src="${randomizedPendants.get(1).getMainPicturePath()}" class="iw smaller" alt="abc">
+									   </a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedPendants.get(1).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedPendants.get(1).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(1).getDiscriminator()}, id=${randomizedPendants.get(1).getId()})}" th:text="${randomizedPendants.get(1).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedPendants.get(1).getNotInStock()} ? #{NoPrice} : ${randomizedPendants.get(1).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(2).getDiscriminator()}, id=${randomizedPendants.get(2).getId()})}"><img th:src="${randomizedPendants.get(2).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedPendants.get(2).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedPendants.get(2).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(2).getDiscriminator()}, id=${randomizedPendants.get(2).getId()})}" th:text="${randomizedPendants.get(2).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedPendants.get(2).getNotInStock()} ? #{NoPrice} : ${randomizedPendants.get(2).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+					   <div class="collcet_1r clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(3).getDiscriminator()}, id=${randomizedPendants.get(3).getId()})}"><img th:src="${randomizedPendants.get(3).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedPendants.get(3).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedPendants.get(3).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(3).getDiscriminator()}, id=${randomizedPendants.get(3).getId()})}" th:text="${randomizedPendants.get(3).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedPendants.get(3).getNotInStock()} ? #{NoPrice} : ${randomizedPendants.get(3).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(4).getDiscriminator()}, id=${randomizedPendants.get(4).getId()})}"><img th:src="${randomizedPendants.get(4).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedPendants.get(4).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedPendants.get(4).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedPendants.get(4).getDiscriminator()}, id=${randomizedPendants.get(4).getId()})}" th:text="${randomizedPendants.get(4).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedPendants.get(4).getNotInStock()} ? #{NoPrice} : ${randomizedPendants.get(4).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+	   <div id="menu3" class="tab-pane fade clearfix" th:each="earring : ${randomizedEarrings}">
+		   <div class="click clearfix">
+			   <div class="collcet_1 clearfix">
+				   <div class="col-sm-6">
+					   <div class="collcet_1l clearfix">
+						   <div class="feature_2im clearfix">
+							   <div class="feature_2im1 clearfix">
+								   <div class="main-picture">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(0).getDiscriminator()}, id=${randomizedEarrings.get(0).getId()})}"><img th:src="${randomizedEarrings.get(0).getMainPicturePath()}" class="iw" alt="abc"></a>
+								   </div>
+							   </div>
+							   <div class="feature_2im2 clearfix">
+								   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							   </div>
+							   <div class="feature_2im4 clearfix">
+								   <div class="col-sm-6 space_left">
+									   <h6><a class="bg_3" href="#" th:text="#{Sample}"></a></h6>
+								   </div>
+
+							   </div>
+						   </div>
+						   <div class="item_last text-center clearfix">
+							   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(0).getDiscriminator()}, id=${randomizedEarrings.get(0).getId()})}" th:text="${randomizedEarrings.get(0).getName()}"></a></h4>
+							   <h6>
+								   <span class="span_1 col_1 bold" th:text="${randomizedEarrings.get(0).getNotInStock()} ? #{NoPrice} : ${randomizedEarrings.get(0).getPrice()} + ' BGN'"></span>
+							   </h6>
+						   </div>
+					   </div>
+				   </div>
+				   <div class="col-sm-6">
+					   <div class="collcet_1r mgt clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(1).getDiscriminator()}, id=${randomizedEarrings.get(1).getId()})}">
+										   <img th:src="${randomizedEarrings.get(1).getMainPicturePath()}" class="iw smaller" alt="abc">
+									   </a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedEarrings.get(1).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedEarrings.get(1).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(2).getDiscriminator()}, id=${randomizedEarrings.get(2).getId()})}"th:text="${randomizedEarrings.get(1).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedEarrings.get(1).getNotInStock()} ? #{NoPrice} : ${randomizedEarrings.get(1).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(2).getDiscriminator()}, id=${randomizedEarrings.get(2).getId()})}"><img th:src="${randomizedEarrings.get(2).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedEarrings.get(2).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedEarrings.get(2).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(2).getDiscriminator()}, id=${randomizedEarrings.get(2).getId()})}"th:text="${randomizedEarrings.get(2).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedEarrings.get(2).getNotInStock()} ? #{NoPrice} : ${randomizedEarrings.get(2).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+					   <div class="collcet_1r clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(3).getDiscriminator()}, id=${randomizedEarrings.get(3).getId()})}"><img th:src="${randomizedEarrings.get(3).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedEarrings.get(3).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedEarrings.get(3).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(3).getDiscriminator()}, id=${randomizedEarrings.get(3).getId()})}" th:text="${randomizedEarrings.get(3).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedEarrings.get(3).getNotInStock()} ? #{NoPrice} : ${randomizedEarrings.get(3).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(4).getDiscriminator()}, id=${randomizedEarrings.get(4).getId()})}"><img th:src="${randomizedEarrings.get(4).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedEarrings.get(4).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedEarrings.get(4).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedEarrings.get(4).getDiscriminator()}, id=${randomizedEarrings.get(4).getId()})}" th:text="${randomizedEarrings.get(4).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedEarrings.get(4).getNotInStock()} ? #{NoPrice} : ${randomizedEarrings.get(4).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+	   <div id="menu4" class="tab-pane fade clearfix" th:each="bracelet : ${randomizedBracelets}">
+		   <div class="click clearfix">
+			   <div class="collcet_1 clearfix">
+				   <div class="col-sm-6">
+					   <div class="collcet_1l clearfix">
+						   <div class="feature_2im clearfix">
+							   <div class="feature_2im1 clearfix">
+								   <div class="main-picture">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(0).getDiscriminator()}, id=${randomizedBracelets.get(0).getId()})}"><img th:src="${randomizedBracelets.get(0).getMainPicturePath()}" class="iw" alt="abc"></a>
+								   </div>
+							   </div>
+							   <div class="feature_2im2 clearfix">
+								   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							   </div>
+							   <div class="feature_2im4 clearfix">
+								   <div class="col-sm-6 space_left">
+									   <h6>
+										   <a th:if="${randomizedBracelets.get(0).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+										   <a th:if="${!randomizedBracelets.get(0).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+									   </h6>
+								   </div>
+							   </div>
+						   </div>
+						   <div class="item_last text-center clearfix">
+							   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(0).getDiscriminator()}, id=${randomizedBracelets.get(0).getId()})}" th:text="${randomizedBracelets.get(0).getName()}"></a></h4>
+							   <h6>
+								   <span class="span_1 col_1 bold" th:text="${randomizedBracelets.get(0).getNotInStock()} ? #{NoPrice} : ${randomizedBracelets.get(0).getPrice()} + ' BGN'"></span>
+							   </h6>
+						   </div>
+					   </div>
+				   </div>
+				   <div class="col-sm-6">
+					   <div class="collcet_1r mgt clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(1).getDiscriminator()}, id=${randomizedBracelets.get(1).getId()})}">
+										   <img th:src="${randomizedBracelets.get(1).getMainPicturePath()}" class="iw smaller" alt="abc">
+									   </a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedBracelets.get(1).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedBracelets.get(1).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(1).getDiscriminator()}, id=${randomizedBracelets.get(1).getId()})}" th:text="${randomizedBracelets.get(1).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedBracelets.get(1).getNotInStock()} ? #{NoPrice} : ${randomizedBracelets.get(1).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(2).getDiscriminator()}, id=${randomizedBracelets.get(2).getId()})}"><img th:src="${randomizedBracelets.get(2).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedBracelets.get(2).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedBracelets.get(2).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(2).getDiscriminator()}, id=${randomizedBracelets.get(2).getId()})}" th:text="${randomizedBracelets.get(2).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedBracelets.get(2).getNotInStock()} ? #{NoPrice} : ${randomizedBracelets.get(2).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+					   <div class="collcet_1r clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(3).getDiscriminator()}, id=${randomizedBracelets.get(3).getId()})}"><img th:src="${randomizedBracelets.get(3).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedBracelets.get(3).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedBracelets.get(3).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(3).getDiscriminator()}, id=${randomizedBracelets.get(3).getId()})}" th:text="${randomizedBracelets.get(3).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedBracelets.get(3).getNotInStock()} ? #{NoPrice} : ${randomizedBracelets.get(3).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(4).getDiscriminator()}, id=${randomizedBracelets.get(4).getId()})}"><img th:src="${randomizedBracelets.get(4).getMainPicturePath()}"  class="iw smaller" alt="abc"></a>
+								   </div>
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+								   </div>
+								   <div class="feature_2im4 clearfix">
+									   <div class="col-sm-6 space_left">
+										   <h6>
+											   <a th:if="${randomizedBracelets.get(4).notInStock}" class="bg_3" href="#" th:text="#{Sample}"></a>
+											   <a th:if="${!randomizedBracelets.get(4).notInStock}" class="bg_3" href="#" th:text="#{InStock}"></a>
+										   </h6>
+									   </div>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedBracelets.get(4).getDiscriminator()}, id=${randomizedBracelets.get(4).getId()})}" th:text="${randomizedBracelets.get(4).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:text="${randomizedBracelets.get(4).getNotInStock()} ? #{NoPrice} : ${randomizedBracelets.get(4).getPrice()} + ' BGN'"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+	   <div id="menu5" class="tab-pane fade clearfix" th:each="gemstone : ${randomizedGemstones}">
+		   <div class="click clearfix">
+			   <div class="collcet_1 clearfix">
+				   <div class="col-sm-6">
+					   <div class="collcet_1l clearfix">
+						   <div class="feature_2im clearfix">
+							   <div class="feature_2im2 clearfix">
+								   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{InStock}"></a></h6>
+							   </div>
+							   <div class="feature_2im1 clearfix">
+								   <div class="main-picture">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(0).getDiscriminator()}, id=${randomizedGemstones.get(0).getId()})}"><img th:src="${randomizedGemstones.get(0).getMainPicturePath()}" class="iw" alt="abc"></a>
+								   </div>
+							   </div>
+						   </div>
+						   <div class="item_last text-center clearfix">
+							   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(0).getDiscriminator()}, id=${randomizedGemstones.get(0).getId()})}" th:text="${randomizedGemstones.get(0).getName()}"></a></h4>
+							   <h6>
+								   <span class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(0).discriminator}, id=${randomizedGemstones.get(0).id})}" th:text="${randomizedGemstones.get(0).getPrice()} + ' BGN ~ ' + #{AveragePrice}"></span>
+							   </h6>
+						   </div>
+					   </div>
+				   </div>
+				   <div class="col-sm-6">
+					   <div class="collcet_1r mgt clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{InStock}"></a></h6>
+								   </div>
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(1).getDiscriminator()}, id=${randomizedGemstones.get(1).getId()})}">
+										   <img th:src="${randomizedGemstones.get(1).getMainPicturePath()}" class="iw smaller" alt="abc">
+									   </a>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(1).getDiscriminator()}, id=${randomizedGemstones.get(1).getId()})}" th:text="${randomizedGemstones.get(1).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(1).discriminator}, id=${randomizedGemstones.get(1).id})}" th:text="${randomizedGemstones.get(1).getPrice()} + ' BGN ~ ' + #{AveragePrice}"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{InStock}"></a></h6>
+								   </div>
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(2).getDiscriminator()}, id=${randomizedGemstones.get(2).getId()})}"><img th:src="${randomizedGemstones.get(2).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(2).getDiscriminator()}, id=${randomizedGemstones.get(2).getId()})}" th:text="${randomizedGemstones.get(2).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(2).discriminator}, id=${randomizedGemstones.get(2).id})}" th:text="${randomizedGemstones.get(2).getPrice()} + ' BGN ~ ' + #{AveragePrice}"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+					   <div class="collcet_1r clearfix">
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{InStock}"></a></h6>
+								   </div>
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(3).getDiscriminator()}, id=${randomizedGemstones.get(3).getId()})}"><img th:src="${randomizedGemstones.get(3).getMainPicturePath()}" class="iw smaller" alt="abc"></a>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(3).getDiscriminator()}, id=${randomizedGemstones.get(3).getId()})}" th:text="${randomizedGemstones.get(3).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(3).discriminator}, id=${randomizedGemstones.get(3).id})}" th:text="${randomizedGemstones.get(3).getPrice()} + ' BGN ~ ' + #{AveragePrice}"></span>
+								   </h6>
+							   </div>
+						   </div>
+						   <div class="col-sm-6 space_left">
+							   <div class="feature_2im clearfix">
+								   <div class="feature_2im2 clearfix">
+									   <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{InStock}"></a></h6>
+								   </div>
+								   <div class="feature_2im1 clearfix">
+									   <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(4).getDiscriminator()}, id=${randomizedGemstones.get(4).getId()})}"><img th:src="${randomizedGemstones.get(4).getMainPicturePath()}"  class="iw smaller" alt="abc"></a>
+								   </div>
+							   </div>
+							   <div class="item_last text-center clearfix">
+								   <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(4).getDiscriminator()}, id=${randomizedGemstones.get(4).getId()})}" th:text="${randomizedGemstones.get(4).getName()}"></a></h4>
+								   <h6>
+									   <span class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${randomizedGemstones.get(4).discriminator}, id=${randomizedGemstones.get(4).id})}" th:text="${randomizedGemstones.get(4).getPrice()} + ' BGN ~ ' + #{AveragePrice}"></span>
+								   </h6>
+							   </div>
+						   </div>
+					   </div>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
+			</div>
+  </div> 
+ </div>
+</section>
+
+<section id="work_h">
+	<h1 class="feedback" th:text="#{ClientFeedbacks}"></h1>
+	<hr style="border-color: #dfb8584d; border-width: 2px;width: 10%;">
+	<div class="containerr">
+		<div class="carousell">
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+			<div class="carousel__face"><span></span></div>
+		</div>
+	</div>
+</section>
+
+<section id="enquiry">
+ <div class="container">
+  <div class="row">
+    <div class="enquiry_1 text-center clearfix">
+	 <div class="col-sm-12">
+	  <h4 class="mgt" th:text="#{Newsletters}"></h4>
+	  <p class="discount" th:text="#{SubscribeNewsletter}"></p><span class="col_1">5% </span><p class="discount" th:text="#{discount}"></p>
+         <form th:action="@{/newsletter/subscribe}" th:method="PATCH">
+             <div class="input-group">
+                 <input type="email" name="email" required class="form-control form_2" th:placeholder="#{Email}">
+                 <span class="input-groupbtn">
+			<button class="btn btn-primary" type="submit" th:text="#{Subscribe}"></button>
+		</span>
+             </div>
+         </form>
+	 </div>
+	</div>
+  </div>
+ </div>
+</section>
+
+<th:block th:include="Footer/footer.html"></th:block>
+
+</body>
+ 
+</html>

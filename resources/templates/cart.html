@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jewelry</title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/global.css" rel="stylesheet">
+	<link href="/css/cart.css" rel="stylesheet">
+	<link href="/css/shop.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+	<script src="/js/jquery-2.1.1.min.js"></script>
+	<script src="/js/authentication.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	  <script src="/js/cart.js"></script>
+	  <meta name="_csrf" th:content="${_csrf.token}"/>
+	  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  </head>
+  
+<body>
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${successfullyRemovedItem}" class="alert alert-success bold">
+	<a href="#" onclick="dismiss()">Successfully removed cart item.<i class="fa-solid fa-x"></i></a>
+</div>
+	
+<section id="center" class="center_shop"> 
+ <div class="container">
+  <div class="row">
+   <div class="center_shop_t clearfix">
+    <div class="col-sm-6">
+	 <div class="center_shop_tl clearfix">
+	  <h4 class="mgt" th:text="#{ShoppingCart}"></h4>
+	 </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="cart_page" class="clearfix cart">
+ <div class="container">
+  <div class="row">
+	<div class="cart_2 clearfix">
+	 <div class="col-sm-6">
+	  <h3 class="bold col_1 mgt" th:text="#{MyCart}"></h3>
+	 </div>
+	 <div class="col-sm-6">
+      <h5 class="text-right mgt"><a th:href="@{/products}" th:text="#{LookForOurProducts}"></a></h5>
+	 </div>
+	</div>
+	<div class="cart_3 clearfix">
+	 <div class="col-sm-8">
+	  <div class="cart_3l clearfix">
+	   <h5 class="mgt" th:text="#{Products}"></h5>
+	  </div>
+	  <div th:if="${!items.isEmpty()}" class="cart_3l1 clearfix" th:each="product : ${items}">
+	   <div class="col-sm-6 space_left">
+	    <div class="cart_3l1i clearfix">
+			<a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${product.discriminator}, id=${product.id})}">
+				<img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${product.discriminator}, id=${product.id})}" th:src="${product.getMainPicturePath()}" alt="abc" class="iw fixed">
+			</a>
+		</div>
+	   </div>
+	   <div class="col-sm-5 margin-top">
+		   <input type="hidden" class="product-id" th:id="${product.getId()}">
+	    <div class="cart_3l1i1 clearfix" id="info">
+		 <h5 th:href="@{/products/detail/{discriminator}/{id}(discriminator=${product.discriminator}, id=${product.id})}" class="mgt"><a href="#" th:text="${product.getName()}"></a></h5>
+		 <h4 th:href="@{/products/detail/{discriminator}/{id}(discriminator=${product.discriminator}, id=${product.id})}" id="productPrice" th:text="${product.getPrice()} + ' BGN'"></h4>
+		</div>
+		<div class="cart_3l1i2 clearfix" id="container">
+			<div th:if="${product.getDiscriminator().equals('Gemstone')}" class="col-sm-6 space_left">
+				<div class="detail_1lri3l clearfix">
+					<h5 class="mgt" th:text="#{Quantity}"></h5>
+		<div class="input-group number-spinner">
+				<span class="input-group-btn">
+					<button onclick="decreasePrice(this)" class="btn btn-default" id="minus" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+				</span>
+						<input type="text" class="form-control text-center" id="values" value="1">
+				<span class="input-group-btn">
+					<button onclick="increasePrice(this)" id="plus" class="btn btn-default" data-dir="up">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</span>
+		</div>
+				</div>
+			</div>
+		</div>
+		   <form th:action="@{/profile/cart/removeItem/{itemId}(itemId=${product.id})}" th:method="DELETE">
+			   <input type="hidden" name="_method" value="DELETE">
+			   <h6 class="mgt">
+				   <button type="submit" class="button_1 mgt" th:text="#{RemoveProduct}"></button>
+			   </h6>
+		   </form>
+	   </div>
+	  </div>
+
+	<div th:if="${user.getCartItems().isEmpty()}" id="no-products">
+		<p th:text="#{NoItemsInCart}"></p>
+		<p th:text="#{NoItemsInCartInfo}"></p>
+	</div>
+	 </div>
+	 <div class="col-sm-4">
+	  <div class="cart_3r clearfix">
+	   <h5 class="mgt head_1" th:text="#{Subtotal}"></h5>
+		<form th:if="${!user.getCartItems().isEmpty()}" th:method="POST" th:action="@{/cart/checkout}" id="form-checkout">
+	   <h3 class="text-center" id="totalPrice" th:text="${totalPrice} + ' BGN'"></h3>
+	   <hr>
+	   <h6 th:text="#{AdditionalComments}"></h6>
+	   <textarea class="form-control" name="comments"></textarea>
+			<input type="hidden" id="subtotalPrice" name="subtotalPrice">
+			  <h5 class="text-center">
+				  <button type="submit" onclick="addCookieAndCalculateTotalPrice()" id="checkoutLink" class="button" th:text="#{Checkout}"></button>
+			  </h5>
+		  </form>
+
+		  <h5 th:text="#{Contacts}"></h5>
+		<h5 class="col_3 normal"><span th:text="#{Phone}"></span> <a>089 776 3197 | 089 850 3538</a></h5>
+		<h5 class="col_3 normal"><span th:text="#{Email}"></span> <a>ivanoviatelierjewelries@gmail.com</a></h5>
+		  <ul class="social-network social-circle">
+			  <li><a href="https://www.facebook.com/ivanoviatelier" target="_blank" class="icoFacebook skyblue" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+			  <li><a href="https://www.instagram.com/ivanoviatelier/" target="_blank" class="icoTwitter skyblue" title="Twitter"><i class="fa-brands fa-instagram"></i></a></li>
+			  <li><a class="icoShoppingCart skyblue" th:href="@{/cart}" title="Shopping Cart"><i class="fa fa-shopping-cart"></i></a></li>
+			  <li><a class="icoPhone skyblue" th:href="@{/contacts}" title="Contact us"><i class="fa fa-phone"></i></a></li>
+			  <li><a class="iconQuestionCircle skyblue" th:href="@{/aboutUs/faq}" title="Need help ?"><i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
+		  </ul>
+	   <hr>
+	  </div>
+	 </div>
+	</div>
+  </div>
+ </div>	 
+</section>
+
+<div class="product_1_last text-center clearfix">
+	<div class="col-sm-12 down">
+		<ul th:if="${totalPages > 1}">
+			<li th:if="${pages > 1}">
+				<a th:href="@{/cart(page=${pages -  1})}"><i class="fa fa-chevron-left"></i></a>
+			</li>
+			<li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
+				<a th:href="@{/cart(page=${pageNumber})}" th:class="${pageNumber == pages} ? 'act' : ''" th:text="${pageNumber}"></a>
+			</li>
+			<li th:if="${pages < totalPages}">
+				<a th:href="@{/cart(page=${pages + 1})}"><i class="fa fa-chevron-right"></i></a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<th:block th:include="Footer/footer.html"></th:block>
+
+</body>
+ 
+</html>

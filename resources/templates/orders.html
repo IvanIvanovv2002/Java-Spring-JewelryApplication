@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/global.css" rel="stylesheet">
+    <link href="/css/orders.css" rel="stylesheet">
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/authentication.js"></script>
+</head>
+<body>
+
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${acceptedOrder}" class="alert alert-success bold text-center">
+    <a href="#" onclick="dismiss()">Успешно потвърди поръчката.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${removedOrder}" class="alert alert-warning bold text-center">
+    <a href="#" onclick="dismiss()">Успешно премахнахте спама.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${service.findAllOrders().isEmpty()}">
+
+    <h1 class="bold text-center" style="margin-top: 2em">Няма никакви поръчки !</h1>
+    <h4 class="bold text-center" style="margin-bottom: 2em">Върни се и провери по-късно !</h4>
+</div>
+
+<div th:each="order : ${service.findAllOrders()}">
+    <h1 class="text-center">Поръчка</h1>
+    <div id="section">
+        <section class="order" >
+            <label for="firstName">Име :</label>
+            <input type="text" readonly="readonly" id="firstName" name="firstName" th:value="${order.getFirstName()}">
+
+            <label for="lastName">Фамилия:</label>
+            <input type="text" readonly="readonly" id="lastName" name="lastName" th:value="${order.getLastName()}">
+
+            <label for="city">Град:</label>
+            <input type="text" readonly="readonly" id="city" name="city" th:value="${order.getCity()}"><br>
+
+            <label for="delivery">Доставчик:</label>
+            <input type="text" readonly="readonly" id="delivery" name="delivery" th:value="${order.getDelivery()}">
+
+            <label for="address">Адрес:</label>
+            <input type="text" readonly="readonly" id="address" name="address" th:value="${order.getAddress()}">
+
+            <label for="email">Имейл:</label>
+            <input type="email" readonly="readonly" id="email" name="email" th:value="${order.getEmail()}">
+
+            <label for="phoneNumber">Телефонен номер:</label>
+            <input type="tel" readonly="readonly" id="phoneNumber" name="phoneNumber" th:value="${order.getPhoneNumber()}" >
+
+            <label for="message">Съобщение към поръчката:</label>
+            <textarea rows="13" cols="30" id="message" readonly="readonly" name="message" th:text="${order.getMessage()}"></textarea>
+
+            <label for="totalPrice">Крайна цена с доставка:</label>
+            <input type="text" readonly="readonly" id="totalPrice" name="totalPrice" th:value="${order.getTotalPrice() + ' BGN'}">
+
+            <div class="centered">
+                <form th:action="@{'/admin/orders/accept/' + ${order.getId()}}" th:method="PATCH">
+                    <button type="submit" class="btn-success accept">Приеми поръчката</button>
+                </form>
+
+                <form th:action="@{'/admin/orders/remove/' + ${order.getId()}}" th:method="PATCH">
+                    <button type="submit" class="btn-danger remove">Изтрии поръчката</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="products">
+            <div class="box" th:each="product : ${service.extractItems(order.getId())}">
+                <img th:src="${product.getKey().getMainPicturePath()}">
+                <p class="text-center bold" th:if="${product.getKey().getDiscriminator().equals('Gemstone')}" th:text="'Бройки: ' +  ${product.getValue()}"></p>
+                <hr>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+
+
+<th:block th:include="Footer/footer.html"></th:block>
+</body>
+</html>

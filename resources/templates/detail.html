@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jewelry</title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/global.css" rel="stylesheet">
+	<link href="/css/detail.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+	<script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+	<script src="/js/productChange.js"></script>
+	  <script src="/js/authentication.js"></script>
+  </head>
+  
+<body>
+
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${nameChanged}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Успешно промени името.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${descriptionChanged}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Успешно промени описанието.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${priceChanged}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Успешно промени цената.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${stockChanged}" class="alert alert-success bold text-center">
+	<a href="#" onclick="dismiss()">Успешно промени наличността.<i class="fa-solid fa-x"></i></a>
+</div>
+
+
+<section id="center" class="center_shop"> 
+ <div class="container">
+  <div class="row">
+   <div class="center_shop_t clearfix">
+    <div class="col-sm-6">
+	 <div class="center_shop_tl clearfix">
+	  <h4 class="mgt" th:text="#{ProductDetail}"></h4>
+	 </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="detail"> 
+ <div class="container">
+  <div class="row">
+   <div class="detail_1 clearfix">
+    <div class="col-sm-9">
+	 <div class="detail_1l clearfix">
+      <div class="col-sm-5 space_left">
+	   <div class="detail_1ll clearfix">
+		   <div class="carousel slide article-slide" id="article-photo-carousel">
+			   <!-- Wrapper for slides -->
+			   <div class="carousel-inner cont-slider">
+				   <div class="item active">
+					   <div class="mag">
+						   <div class="magnify">
+							   <img data-toggle="magnify" th:src="${paths.get(0)}">
+							   <div class="magnify-large"></div>
+						   </div>
+					   </div>
+				   </div>
+				   <div class="item" th:each="path : ${paths.stream().skip(1).toList()}">
+					   <div class="mag">
+						   <div class="magnify">
+							   <img data-toggle="magnify" th:src="${path}">
+							   <div class="magnify-large"></div>
+						   </div>
+					   </div>
+				   </div>
+			   </div>
+			   <!-- Indicators -->
+			   <ol class="carousel-indicator">
+				   <li th:each="path, iterStat : ${paths}" th:class="${(iterStat.index == 0) ? 'active' : ''}" th:attr="data-slide-to=${iterStat.index}" data-target="#article-photo-carousel">
+					   <img th:src="${path}" src="">
+				   </li>
+			   </ol>
+		   </div>
+	   </div>
+	  </div>
+	  <div class="col-sm-7 space_left">
+	   <div class="detail_1lr clearfix">
+	    <div class="detail_1lri clearfix">
+		 <h4 class="mgt" th:text="${jewelry.getName()}"></h4>
+		 <hr>
+		<h3><span th:unless="${jewelry.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.notInStock} ? #{NoPrice} : ${jewelry.price} + ' BGN'"></span></h3>
+		<h3><span th:if="${jewelry.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.notInStock} ? #{NoPrice} : ${jewelry.price} + ' BGN ~ ' + #{AveragePrice}"></span></h3>
+		</div>
+		<div class="detail_1lri3 clearfix">
+		 <div class="col-sm-6 space_right addToCart">
+		  <div class="detail_1lri3r clearfix">
+			<h5 class="text-right">
+				<a class="button mgt-1 cartButton" th:if="${!jewelry.getNotInStock()}" th:href="@{/add/item/cart(discriminator=${jewelry.getDiscriminator()}, jewelryId=${jewelry.getId()})}" th:text="#{AddToCart}"></a>
+				<a class="button mgt-1 cartButton" th:if="${!jewelry.getNotInStock()}" th:href="@{/add/item/wishlist(discriminator=${jewelry.getDiscriminator()}, jewelryId=${jewelry.getId()})}" th:text="#{AddToWishlist}"></a>
+			</h5>
+			<h5 class="text-right">
+				<a class="button mgt cartButton" th:if="${jewelry.getNotInStock()}" th:href="@{/contacts}"  th:text="#{MakeAnInquiry}"></a>
+			</h5>
+		  </div>
+		 </div>
+		</div>
+		<div class="detail_1lri4 clearfix">
+		<hr>
+		</div>
+	   </div>
+	  </div>
+	 </div>
+	 <div class="product_detail_1 clearfix">
+		   <ul class="nav nav-tabs tab_1">
+			  <li class="active"><a data-toggle="tab" href="#home" th:text="#{Description}"><i class="fa fa-globe"></i></a></li>
+			  <li class=""><a data-toggle="tab" href="#menu1" th:text="#{AdditionalInformation}"><i class="fa fa-photo"></i></a></li>
+			  <li th:if="${jewelry.getDiscriminator().equals('Ring')}" class=""><a data-toggle="tab" href="#menu2" th:text="#{RingMeasurer}"><i class="fa fa-cog"></i></a></li>
+           </ul>
+		   <div class="tab-content clearfix">
+			  <div id="home" class="tab-pane fade clearfix active in">
+				 <div class="click clearfix">
+					<div class="col-sm-12">
+					 <div class="home_i">
+					   <p class="mgt" th:text="${jewelry.getDescription()}"></p>
+					 </div>
+					</div>
+			   </div>
+			  </div>
+			  <div id="menu1" class="tab-pane fade clearfix">
+				 <div class="click clearfix">
+					<div class="col-sm-12 responsive">
+					  <div class="menu_i clearfix">
+					    <table>
+						  <tbody>
+						  <tr>
+							<td th:text="#{Price}"></td>
+							<td th:text="${jewelry.getNotInStock()} ? #{Sample} : ${jewelry.getPrice()} + ' BGN'"></td>
+						  </tr>
+						  <tr>
+							<td th:text="#{InStock}"></td>
+							<td th:if="${jewelry.getNotInStock()}"><i class="fa-solid fa-x"></i></td>
+							<td th:unless="${jewelry.getNotInStock()}"><i class="fa-solid fa-check"></i></td>
+						  </tr>
+						  <tr>
+							  <td th:text="#{UsedStone}"></td>
+							  <td th:text="${jewelry.getGemstoneType()}"></td>
+						  </tr>
+						  <tr th:if="${jewelry.getDiscriminator().equals('Gemstone')}">
+							  <td th:text="#{Origin}"></td>
+							  <td th:text="${jewelry.getOrigin()}"></td>
+						  </tr>
+					   </tbody>
+	                    </table>
+						  <section th:if="${jewelry.getVideo() != null}">
+							  <iframe style="width: 100%; height: 450px" th:src="${jewelry.getVideo()}"></iframe>
+						  </section>
+					  </div>
+					</div>
+			   </div>
+			  </div>
+			  <div id="menu2" class="tab-pane fade">
+				  <p th:text="#{RingMeasurerWays}"></p>
+				  <p th:text="#{FirstWay}"></p>
+				  <p th:text="#{SecondWay}"></p>
+				  <img src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1705652529/staticImages/a7437d18-6906-433f-b26b-191806478cbb.png">
+				  <p th:text="#{ThirdWay}"></p>
+				  <p th:text="#{RingMeasureMoreInfo}"></p>
+				  <p th:text="#{RingMeasureMoreInfo2}"></p>
+				  <img src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1705652483/staticImages/fe878fe5-f0d8-4d94-899e-542cafb5d9b7.png">
+			  </div>
+			</div>
+	 </div>
+	</div>
+	<div class="col-sm-3">
+	 <div class="detail_1r clearfix">
+      <div class="detail_1ri clearfix">
+	    <h4 class="mgt" th:text="#{RecommendedInfo}"></h4>
+	   <hr>
+	   <p class="mgt" th:text="#{ProductDelivery}"><i class="fa fa-retweet"></i></p>
+	   <p th:text="#{ContactInfo}"><i class="fa fa-minus-circle"></i></p>
+	   <p th:text="#{AccountSubscription}"><i class="fa fa-comment"></i></p>
+	   <hr>
+		<div sec:authorize="hasRole('OWNER')">
+			<button class="admin-button" onclick="toggleChangeDescription()">Промяна на Описание</button>
+			<button class="admin-button" onclick="toggleChangePrice()">Промяна на Цена</button>
+			<button class="admin-button" onclick="toggleChangeName()">Промяна на Име</button>
+			<button class="admin-button" onclick="toggleStockChange()">Промяна на Наличност</button>
+			<form th:action="@{/admin/remove/item/{id}(id=${jewelry.getId()})}">
+				<button class="admin-button" type="submit">Изтрий артикул</button>
+			</form>
+			<hr>
+		</div>
+	   <ul class="social-network social-circle">
+		   <li><a href="https://www.facebook.com/ivanoviatelier" target="_blank" class="icoFacebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+		   <li><a href="https://www.instagram.com/ivanoviatelier/" target="_blank" class="icoTwitter" title="Twitter"><i class="fa-brands fa-instagram"></i></a></li>
+		   <li><a class="icoShoppingCart" th:href="@{/cart}" title="Shopping Cart"><i class="fa fa-shopping-cart"></i></a></li>
+		   <li><a class="icoPhone" th:href="@{/contacts}" title="Contact us"><i class="fa fa-phone"></i></a></li>
+		   <li><a class="iconQuestionCircle" th:href="@{/aboutUs/faq}" title="Need help ?"><i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
+       </ul>
+	   <hr>
+	  </div>
+	 </div>
+	</div>
+   </div>
+
+	  <div sec:authorize="hasRole('OWNER')">
+
+		  <section class="admin-change" id="change-name">
+			  <form th:method="PATCH" th:action="@{/admin/product/changeName}">
+				  <label>
+					  Ново име:
+					  <input name="newName" required type="text">
+					  <!-- Pass the id of the product instead of the object -->
+					  <input type="hidden" name="productId" th:value="${jewelry.id}">
+				  </label>
+				  <button class="btn-success" type="submit">Промени</button>
+			  </form>
+		  </section>
+
+		  <section class="admin-change" id="change-description">
+			  <form th:method="PATCH" th:action="@{/admin/product/changeDescription}">
+				  <label id="textarea-description" class="text-center">
+					  Ново описание:
+					  <textarea rows="15" cols="85" id="textarea-change" name="newDescription" required></textarea>
+					  <input type="hidden" name="productId" th:value="${jewelry.id}">
+					  <button class="btn-success" type="submit">Промени</button>
+				  </label>
+			  </form>
+		  </section>
+
+		  <section class="admin-change" id="change-price">
+			  <form th:method="PATCH" th:action="@{/admin/product/changePrice}">
+				  <label>
+					  Нова цена:
+					  <input name="newPrice" required type="number">
+					  <input type="hidden" name="productId" th:value="${jewelry.id}">
+				  </label>
+				  <button class="btn-success" type="submit">Промени</button>
+			  </form>
+		  </section>
+
+		  <section class="admin-change" id="change-stock">
+			  <form th:method="PATCH" th:action="@{/admin/product/stockChange}">
+				  <label class="block">
+					  В наличност:
+					  <input name="stock" value="inStock"  type="radio">
+				  </label>
+				  <label class="block">
+					  Не е в наличност:
+					  <input name="stock"  value="notInStock" type="radio">
+				  </label>
+				  <input type="hidden" name="productId" th:value="${jewelry.id}">
+				  <button class="btn-success" type="submit">Промени</button>
+			  </form>
+		  </section>
+	  </div>
+
+   <div id="related" class="collcet_1r clearfix">
+     <h3 class="heading" th:text="#{RelatedProducts}"></h3>
+	   <div class="col-sm-3 space_left" th:each="jewelry : ${commonJewelries}">
+					 <div class="feature_2im clearfix">
+					   	    <div class="feature_2im1 clearfix">
+					     <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" ><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:src="${jewelry.getMainPicturePath()}" class="iw" alt="abc"></a>
+					    </div>
+							<div class="feature_2im2 clearfix">
+							 <h6 class="pull-right mgt"><a class="bg_4" href="#" th:text="#{HandMade}"></a></h6>
+							</div>
+							<div class="feature_2im4 clearfix">
+							 <div class="col-sm-6 space_left">
+							   <h6><a class="bg_3" href="#" th:text="#{Sample}"></a></h6>
+							 </div>
+							</div>
+					 </div>
+					 <div class="item_last text-center clearfix">
+					  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.getName()}"></a></h4>
+					  <h6>
+						  <span th:unless="${jewelry.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.notInStock} ? #{NoPrice} : ${jewelry.price} + ' BGN'"></span>
+						  <span th:if="${jewelry.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.notInStock} ? #{NoPrice} : ${jewelry.price} + ' BGN ~ ' + #{AveragePrice}"></span>
+					   </h6>
+					 </div>
+					</div>
+	  </div>
+  </div>
+ </div>
+</section>
+
+<th:block th:include="Footer/footer.html"></th:block>
+	
+<script>
+$(document).ready(function(){
+	/*****Fixed Menu******/
+	var secondaryNav = $('.cd-secondary-nav'),
+	   secondaryNavTopPosition = secondaryNav.offset().top;
+		$(window).on('scroll', function(){
+			if($(window).scrollTop() > secondaryNavTopPosition ) {
+				secondaryNav.addClass('is-fixed');	
+			} else {
+				secondaryNav.removeClass('is-fixed');
+			}
+		});	
+		
+});
+</script>
+
+<script>
+
+!function ($) {
+
+    "use strict"; // jshint ;_;
+
+
+    /* MAGNIFY PUBLIC CLASS DEFINITION
+     * =============================== */
+
+    var Magnify = function (element, options) {
+        this.init('magnify', element, options)
+    }
+
+    Magnify.prototype = {
+
+        constructor: Magnify
+
+        , init: function (type, element, options) {
+            var event = 'mousemove'
+                , eventOut = 'mouseleave';
+
+            this.type = type
+            this.$element = $(element)
+            this.options = this.getOptions(options)
+            this.nativeWidth = 0
+            this.nativeHeight = 0
+
+            this.$element.wrap('<div class="magnify" \>');
+            this.$element.parent('.magnify').append('<div class="magnify-large" \>');
+            this.$element.siblings(".magnify-large").css("background","url('" + this.$element.attr("src") + "') no-repeat");
+
+            this.$element.parent('.magnify').on(event + '.' + this.type, $.proxy(this.check, this));
+            this.$element.parent('.magnify').on(eventOut + '.' + this.type, $.proxy(this.check, this));
+        }
+
+        , getOptions: function (options) {
+            options = $.extend({}, $.fn[this.type].defaults, options, this.$element.data())
+
+            if (options.delay && typeof options.delay == 'number') {
+                options.delay = {
+                    show: options.delay
+                    , hide: options.delay
+                }
+            }
+
+            return options
+        }
+
+        , check: function (e) {
+            var container = $(e.currentTarget);
+            var self = container.children('img');
+            var mag = container.children(".magnify-large");
+
+            // Get the native dimensions of the image
+            if(!this.nativeWidth && !this.nativeHeight) {
+                var image = new Image();
+                image.src = self.attr("src");
+
+                this.nativeWidth = image.width;
+                this.nativeHeight = image.height;
+
+            } else {
+
+                var magnifyOffset = container.offset();
+                var mx = e.pageX - magnifyOffset.left;
+                var my = e.pageY - magnifyOffset.top;
+
+                if (mx < container.width() && my < container.height() && mx > 0 && my > 0) {
+                    mag.fadeIn(100);
+                } else {
+                    mag.fadeOut(100);
+                }
+
+                if(mag.is(":visible"))
+                {
+                    var rx = Math.round(mx/container.width()*this.nativeWidth - mag.width()/2)*-1;
+                    var ry = Math.round(my/container.height()*this.nativeHeight - mag.height()/2)*-1;
+                    var bgp = rx + "px " + ry + "px";
+
+                    var px = mx - mag.width()/2;
+                    var py = my - mag.height()/2;
+
+                    mag.css({left: px, top: py, backgroundPosition: bgp});
+                }
+            }
+
+        }
+    }
+
+
+    /* MAGNIFY PLUGIN DEFINITION
+     * ========================= */
+
+    $.fn.magnify = function ( option ) {
+        return this.each(function () {
+            var $this = $(this)
+                , data = $this.data('magnify')
+                , options = typeof option == 'object' && option
+            if (!data) $this.data('tooltip', (data = new Magnify(this, options)))
+            if (typeof option == 'string') data[option]()
+        })
+    }
+
+    $.fn.magnify.Constructor = Magnify
+
+    $.fn.magnify.defaults = {
+        delay: 0
+    }
+
+
+    /* MAGNIFY DATA-API
+     * ================ */
+
+    $(window).on('load', function () {
+        $('[data-toggle="magnify"]').each(function () {
+            var $mag = $(this);
+            $mag.magnify()
+        })
+    })
+
+} ( window.jQuery );
+	</script>
+
+<script>
+	$(document).on('click', '.number-spinner button', function () {    
+	var btn = $(this),
+		oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+		newVal = 0;
+	
+	if (btn.attr('data-dir') == 'up') {
+		newVal = parseInt(oldValue) + 1;
+	} else {
+		if (oldValue > 1) {
+			newVal = parseInt(oldValue) - 1;
+		} else {
+			newVal = 1;
+		}
+	}
+	btn.closest('.number-spinner').find('input').val(newVal);
+});
+	</script>
+</body>
+ 
+</html>

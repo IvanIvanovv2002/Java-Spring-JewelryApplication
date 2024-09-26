@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jewelry</title>
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/global.css" rel="stylesheet">
+	<link href="/css/shop.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+	<script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+	<script src="/js/category_side_bar.js"></script>
+  </head>
+  
+<body>
+
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${itemAdded}" class="alert alert-success bold">
+	<a href="#" onclick="dismiss()">Successfully added product in your Cart / Wishlist !</a>
+</div>
+
+<section id="center" class="center_shop"> 
+ <div class="container">
+  <div class="row">
+   <div class="center_shop_t clearfix">
+    <div class="col-sm-6">
+	 <div class="center_shop_tl clearfix">
+	  <h4 class="mgt" th:text="#{Products-Jewelries}"></h4>
+	 </div>
+	</div>
+   </div>
+   <div class="center_shop_1 clearfix">
+    <div class="col-sm-3">
+	 <div class="center_shop_1l clearfix">
+	   <div class="center_shop_1li clearfix">
+	   <h5 class="mgt" th:text="#{Categories}"></h5>
+		   <div class="ziehharmonika">
+			   <h3 data-prefix="★" class="active"><a th:href="@{/products(page=1, jewelryType='Ring')}" th:text="#{Rings}"></a><div class="arrowDown"></div><div class="collapseIcon">–</div><div class="arrowDown"></div><div class="collapseIcon">–</div></h3>
+			   <div class="clickable" style="display: block;">
+				   <ul>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Ascending', jewelryType='Ring')}" th:text="#{PriceLowHigh}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Descending', jewelryType='Ring')}" th:text="#{PriceHighLow}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Ascending', jewelryType='Ring')}" th:text="#{AlphabeticallyAsc}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Descending', jewelryType='Ring')}" th:text="#{AlphabeticallyDesc}"></a></li>
+				   </ul>
+			   </div>
+			   <h3 data-prefix="★"><a th:href="@{/products(page=1, jewelryType='Bracelet')}" th:text="#{Bracelets}"></a><div class="arrowDown"></div><div class="collapseIcon">+</div><div class="arrowDown"></div><div class="collapseIcon">+</div></h3>
+			   <div class="clickable" style="">
+				   <ul>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Ascending', jewelryType='Bracelet')}" th:text="#{PriceLowHigh}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Descending', jewelryType='Bracelet')}" th:text="#{PriceHighLow}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Ascending', jewelryType='Bracelet')}" th:text="#{AlphabeticallyAsc}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Descending', jewelryType='Bracelet')}" th:text="#{AlphabeticallyDesc}"></a></li>
+				   </ul>
+			   </div>
+			   <h3 data-prefix="★" class=""><a th:href="@{/products(page=1, jewelryType='Earring')}" th:text="#{Earrings}"></a><div class="arrowDown"></div><div class="collapseIcon">+</div><div class="arrowDown"></div><div class="collapseIcon">+</div></h3>
+			   <div class="clickable" style="display: none;">
+				   <ul>
+					   <li><a th:href="@{/products(page=1, jewelryType='Earring')}" th:text="#{PriceLowHigh}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Descending', jewelryType='Earring')}" th:text="#{PriceHighLow}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Ascending', jewelryType='Earring')}" th:text="#{AlphabeticallyAsc}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Descending', jewelryType='Earring')}" th:text="#{AlphabeticallyDesc}"></a></li>
+				   </ul>
+			   </div>
+			   <h3 data-prefix="★"><a th:href="@{/products(page=1, jewelryType='Pendant')}" th:text="#{Pendants}"></a><div class="arrowDown"></div><div class="collapseIcon">+</div><div class="arrowDown"></div><div class="collapseIcon">+</div></h3>
+			   <div class="clickable" style="">
+				   <ul>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Ascending', jewelryType='Pendant')}" th:text="#{PriceLowHigh}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Descending', jewelryType='Pendant')}" th:text="#{PriceHighLow}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Ascending', jewelryType='Pendant')}" th:text="#{AlphabeticallyAsc}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Descending', jewelryType='Pendant')}" th:text="#{AlphabeticallyDesc}"></a></li>
+				   </ul>
+			   </div>
+			   <h3 data-prefix="★"><a th:href="@{/products(page=1, jewelryType='Gemstone')}" th:text="#{Stones}"></a><div class="arrowDown"></div><div class="collapseIcon">+</div><div class="arrowDown"></div><div class="collapseIcon">+</div></h3>
+			   <div class="clickable" style="">
+				   <ul>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Ascending', jewelryType='Gemstone')}" th:text="#{PriceLowHigh}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Price-Descending', jewelryType='Gemstone')}" th:text="#{PriceHighLow}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Ascending', jewelryType='Gemstone')}" th:text="#{AlphabeticallyAsc}"></a></li>
+					   <li><a th:href="@{/products(page=1, sortType= 'Alphabetical-Descending', jewelryType='Gemstone')}" th:text="#{AlphabeticallyDesc}"></a></li>
+				   </ul>
+			   </div>
+		   </div>
+	  </div>
+	   <div class="center_shop_1li1 clearfix">
+	     <h5 class="mgt" th:text="#{PopularTags}"></h5>
+		<div class="center_shop_1li1i clearfix">
+		 <ul class="mgt">
+		 <li><a th:href="@{/products(page=1,jewelryType='Ring')}" th:text="#{Rings}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType='Pendant')}" th:text="#{Pendants}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType='Bracelet')}" th:text="#{Bracelets}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType='Earring')}" th:text="#{Earrings}"></a></li>
+		<li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Aquamarines})}" th:text="#{Aquamarines}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Rubies})}" th:text="#{Rubies}"></a></li>
+		<li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Amethysts})}" th:text="#{Amethysts}"></a></li>
+		<li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Emeralds})}" th:text="#{Emeralds}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Sapphires})}" th:text="#{Sapphires}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Tanzanites})}" th:text="#{Tanzanites}"></a></li>
+		<li><a th:href="@{/products(page=1,jewelryType = 'Gemstone', keyWords=#{Opals})}" th:text="#{Opals}"></a></li>
+		<li><a th:href="@{/products(page=1,jewelryType = 'Jewelry', keyWords=#{Rubies})}" th:text="#{JewelryWithRuby}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Jewelry' ,keyWords=#{Opals})}" th:text="#{JewelryWithOpal}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Jewelry' ,keyWords=#{Aquamarines})}" th:text="#{JewelryWithAquamarine}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Jewelry' ,keyWords=#{Amethysts})}" th:text="#{JewelryWithAmethyst}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Jewelry' ,keyWords=#{Tanzanites})}" th:text="#{JewelryWithTanzanite}"></a></li>
+		 <li><a th:href="@{/products(page=1,jewelryType = 'Jewelry' ,keyWords=#{Emeralds})}" th:text="#{JewelryWithEmerald}"></a></li>
+		<li><a th:href="@{/products(page=1,jewelryType = 'Jewelry' ,keyWords=#{Sapphires})}" th:text="#{JewelryWithSapphire}"></a></li>
+		 </ul>
+		</div>
+	  </div>
+	   <div class="center_shop_1li1 clearfix">
+
+		   <form th:action="@{/newsletter/subscribe}" th:method="PATCH">
+			   <h5 class="mgt" th:text="#{Newsletters}"></h5>
+			   <h6 th:text="#{NewsLettersText}"></h6>
+			   <input class="form-control" name="email" th:placeholder="#{Email}" required type="text">
+			   <h6><button class="button_1 mgt" type="submit"  th:text="#{Subscribe}"></button></h6>
+		   </form>
+	  </div>
+	   <div class="center_shop_1li1 clearfix">
+	   <h5 class="mgt" th:text="#{AboutUs}"></h5>
+	    <div class="carousel slide" id="myCarousel1">
+        <div class="carousel-inner">
+            <div class="item active text-center mga">
+                <img class="img-circle" src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1706183711/staticImages/635e2a95-cbdf-4e48-aad2-96e1e0d9f4f2.png" alt="abc">
+				<h4 class="bold">Ivanovi Atelier</h4>
+				<p th:text="#{DescriptionBioJewelry}"></p>
+              </div><!-- /Slide1 -->
+            <div class="item text-center mga">
+                <img class="img-circle" src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1705354426/staticImages/cc90cd28-5a93-4661-adff-396cc003205a.jpg" alt="abc">
+				<h4 class="bold">Ivanovi Atelier</h4>
+				<p th:text="#{DescriptionBioGemstones}"></p>
+              </div><!-- /Slide2 -->
+            <!-- /Slide3 -->
+        </div>
+	   <nav>
+			<ul class="control-box pager">
+				<li><a data-slide="prev" href="#myCarousel1" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+				<li><a data-slide="next" href="#myCarousel1" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+				</ul>
+	  </nav>
+	</div>
+	  </div>
+	 </div>
+	</div>
+	<div class="col-sm-9">
+	 <div class="center_shop_1r clearfix">
+	   <div class="center_product_1r2 clearfix">
+	   <div class="col-sm-6">
+	    <div class="center_product_1r2l clearfix">
+			<p class="mgt" th:text="#{TotalItemsFound} + ${totalItems}"></p>
+		</div>
+	   </div>
+		   <div class="col-sm-6">
+			   <form th:method="GET" th:action="@{/products(page=1)}">
+				   <div class="center_product_1r2r text-right clearfix">
+					   <h5 class="mgt" th:text="#{SORT_BY}"></h5>
+					   <select class="form-control" id="subject" name="sortType">
+						   <option value="none" th:text="#{None}"></option>
+						   <option value="Price-Ascending" th:text="#{PriceLowHigh}"></option>
+						   <option value="Price-Descending" th:text="#{PriceHighLow}"></option>
+						   <option value="Alphabetical-Ascending" th:text="#{AlphabeticallyAsc}"></option>
+						   <option value="Alphabetical-Descending" th:text="#{AlphabeticallyDesc}"></option>
+					   </select>
+					   <input class="btn btn-info filterButton" type="submit" th:value="#{Filter}">
+				   </div>
+			   </form>
+		   </div>
+	   </div>
+	   <div class="collcet_1r clearfix">
+	   <div class="col-sm-4 space_left" th:each="jewelry : ${jewelries}">
+					 <div class="feature_2im clearfix">
+					   	    <div class="feature_2im1 clearfix">
+					     <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}"><img th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:src="${jewelry.getMainPicturePath()}" class="iw" alt="abc"></a>
+					    </div>
+							<div class="feature_2im2 clearfix">
+								<h6 th:if="${!jewelry.getDiscriminator().equals('Gemstone') && jewelry.getNotInStock()}" class="pull-right mgt"><a class="bg_2" href="#" th:text="#{Sample}"></a></h6>
+								<h6 th:if="${!jewelry.getNotInStock()}" class="pull-right mgt"><a class="bg_2" href="#" th:text="#{InStock}"></a></h6>
+							</div>
+					 </div>
+					 <div class="item_last text-center clearfix">
+					  <h4><a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.getName()}"></a></h4>
+					  <h6>
+					   <span th:unless="${jewelry.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.notInStock} ? #{NoPrice} : ${jewelry.price} + ' BGN'"></span>
+						<span th:if="${jewelry.getDiscriminator().equals('Gemstone')}" class="span_1 col_1 bold" th:href="@{/products/detail/{discriminator}/{id}(discriminator=${jewelry.discriminator}, id=${jewelry.id})}" th:text="${jewelry.notInStock} ? #{NoPrice} : ${jewelry.price} + ' BGN ~ ' + #{AveragePrice}"></span>
+					  </h6>
+					 </div>
+					</div>
+	  </div>
+		 <div class="product_1_last text-center clearfix">
+			 <div class="col-sm-12">
+				 <ul th:if="${totalPages > 1}">
+					 <li th:if="${currentPage > 1}">
+						 <a th:href="@{/products(page=${currentPage -  1}, sortType=${sortType})}"><i class="fa fa-chevron-left"></i></a>
+					 </li>
+					 <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}">
+						 <a th:href="@{/products(page=${pageNumber}, sortType=${sortType})}" th:class="${pageNumber == currentPage} ? 'act' : '' " th:text="${pageNumber}"></a>
+					 </li>
+					 <li th:if="${currentPage < totalPages}">
+						 <a th:href="@{/products(page=${currentPage + 1}, sortType=${sortType})}"><i class="fa fa-chevron-right"></i></a>
+					 </li>
+				 </ul>
+			 </div>
+		 </div>
+	 </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<th:block th:include="Footer/footer.html"></th:block>
+
+
+</body>
+ 
+</html>

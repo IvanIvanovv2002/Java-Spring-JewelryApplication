@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale= 1.0">
+    <title>Profile</title>
+    <link href="/css/global.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/profile.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css"/>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/profile.js"></script>
+    <script src="/js/authentication.js"></script>
+    <script src="/js/cart.js"></script>
+</head>
+<body>
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<th:block th:include="Navigation/navigation.html"></th:block>
+
+<div th:if="${changedPassword}" class="alert alert-success bold">
+    <a href="#" class="text-center block" onclick="dismiss()">You have successfully changed your password !<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${removedItemWishlist}" class="alert alert-success bold">
+    <a href="#" class="text-center block" onclick="dismiss()">You have successfully removed item from your wishlist !<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${passwordChangeIssue}" class="alert alert-warning bold">
+    <a href="#" class="text-center block" onclick="dismiss()">Your old password doesn't match with the current password.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<div th:if="${samePasswordIssue}" class="alert alert-warning bold">
+    <a href="#" class="text-center block" onclick="dismiss()">Your old and new password are same.<i class="fa-solid fa-x"></i></a>
+</div>
+
+<header id="profile-header">
+    <h1 class="user-title text-center" th:text="#{PersonalProfile}"></h1>
+    <hr>
+    <nav class="profile-navigation">
+        <ul class="profile-list">
+            <li><a href="#" onclick="showBasePage()" th:text="#{BasicInformation}"></a></li>
+            <li><a href="#" onclick="togglePasswordChanger()" th:text="#{ChangePassword}">Change password</a> <i class="fa fa-key"></i> </li>
+            <li><a id="wishlist-link" href="#" onclick="showWishlist()" th:text="#{Wishlist}">Wishlist</a> <i class="fa fa-heart"></i> </li>
+            <li><a th:href="@{/cart}" onclick="initializeItems()" th:text="#{ShoppingCart}">Cart</a> <i class="glyphicon glyphicon-shopping-cart"></i> </li>
+        </ul>
+    </nav>
+    <hr>
+</header>
+
+<main>
+
+    <section id="basic-info">
+        <a href="#">
+            <h2 class="text-center title-top" th:text="#{YourAccount}"></h2>
+            <p class="text-center" th:text="#{ProfileIntro}"></p>
+        </a>
+
+        <hr>
+
+        <a href="#">
+            <h2 class="text-center" href="#" onclick="showWishlist()" th:text="#{Wishlist}"></h2>
+            <p class="text-center" th:text="#{WishlistIntro}"></p>
+        </a>
+        <hr>
+
+        <a th:href="@{/cart(page=1)}">
+            <h2 class="text-center" th:text="#{ShoppingCart}"></h2>
+        </a>
+
+        <p class="text-center" th:text="#{CartIntro}"></p>
+
+        <hr>
+
+        <a href="#">
+            <h2 class="text-center" onclick="togglePasswordChanger()" th:text="#{ChangingPassword}"></h2>
+            <p class="title-bottom" th:text="#{ChangePasswordIntro}"></p>
+        </a>
+
+    </section>
+
+    <section id="wishlist">
+        <div th:if="${!user.getWishlist().isEmpty()}" class="items" th:each="item : ${user.getWishlist()}">
+            <form th:action="@{/profile/wishlist/removeItem}" th:method="PATCH">
+                <a th:href="@{/products/detail/{discriminator}/{id}(discriminator=${item.discriminator}, id=${item.id})}">
+                    <img th:src="${item.getMainPicturePath()}">
+                    <p th:text="${item.getName()}"></p>
+                    <input type="hidden" name="id" th:value="${item.getId()}">
+                    <div id="flex"> <button class="btn-warning btn" type="submit" id="removeBtn" th:text="#{RemoveProduct}"></button></div>
+                </a>
+            </form>
+        </div>
+        <div th:if="${user.getWishlist().isEmpty()}" id="no-products">
+            <p th:text="#{NoItemsInWishlist}"></p>
+            <p th:text="#{NoItemsInWishlistInfo}"></p>
+        </div>
+    </section>
+
+    <section class="loginForm" style="display: none">
+        <img src="http://res.cloudinary.com/dvvt1mxzy/image/upload/v1705354426/staticImages/cc90cd28-5a93-4661-adff-396cc003205a.jpg">
+        <form th:method="post" th:action="@{/profile/changePassword}">
+            <input type="hidden" name="_method" value="PATCH">
+            <h3 class="orange" th:text="#{ChangePassword}"></h3>
+            <div class="form-floating">
+                <label class="login-label" for="floatingInput" th:text="#{OldPassword}"></label>
+                <i class="fas fa-key"></i>
+                <input required name="oldPassword" type="password" class="form-control input" minlength="5" maxlength="25" id="floatingInput" th:placeholder="#{OldPassword}">
+
+                <label class="login-label" for="floatingPassword" th:text="#{NewPassword}"></label>
+                <i class="fas fa-key"></i>
+                <input required type="password" minlength="5" maxlength="25" name="newPassword" class="form-control input" id="floatingPassword"  th:placeholder="#{NewPassword}">
+            </div>
+
+            <button type="submit" class="submit-button" th:text="#{Submit}"></button>
+
+            <hr class="login-line">
+        </form>
+    </section>
+</main>
+<th:block th:include="Footer/footer.html"></th:block>
+</body>
+
+</html>
