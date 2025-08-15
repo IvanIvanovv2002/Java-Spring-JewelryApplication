@@ -2,6 +2,7 @@
 
 ## Technologies and Tools Used
 
+- **Spring Web** – Provides the foundation for building the web layer of the application.
 - **Spring Data** – Used for managing data persistence and security-related data operations.
 - **Spring Mailing** – Handles email sending functionalities.
 - **Spring Security** – Ensures security and access control for the web application.
