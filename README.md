@@ -20,8 +20,4 @@
 - **SQL Database** – Stores application data.
 - **Cloudinary** – Cloud-based platform for storing and managing images in the database.
 
- ## 📸 Screenshots
-![Home](screenshots/home.png)
-![Products](<img width="669" height="385" alt="image" src="https://github.com/user-attachments/assets/dc2e740a-25b5-4397-875e-e8041eb6ddd3" />)
-![Order](<img width="643" height="386" alt="image" src="https://github.com/user-attachments/assets/dcf21df8-c097-4412-a08b-47345e4d7501" />)
 
